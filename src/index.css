@@ -1,3 +1,55 @@
+
+:root {
+  /* Teemabuttoneissa näkyvät värit  */
+  --clr-light-primary:hsl(114, 20%, 32%);
+  --clr-light-secondary:#f3f3f3;
+  --clr-dark-primary: #1f1f1f;
+  --clr-dark-secondary: #4b4298;
+  --clr-secret-primary: hsl(244, 24%, 40%);
+  --clr-secret-secondary: #d2cbc3;
+
+  --clr-light: #f3f3f3;
+  --clr-dark: #363636;
+  --clr-primary: var(--clr-light-primary);
+  --clr-primary-light: hsl(116, 14%, 57%);
+  --clr-secondary: rgb(169, 155, 123);
+  --clr-neutral: rgb(110, 110, 110); /* Buttonien, input-kenttien yms. reunat */
+  --clr-neutral-light: rgb(233, 233, 233);
+
+  --clr-text: var(--clr-dark);
+  --clr-headerlink: var(--clr-primary);
+  --clr-header-bg: var(--clr-light);
+  --clr-button-bg: var(--clr-primary);
+  --clr-button-hover: var(--clr-primary-light);
+  --clr-button-hover-text: var(--clr-light);
+  --clr-button-text: var(--clr-light);
+  --clr-thumb-icon: var(--clr-icon);
+  --clr-title: var(--clr-primary);
+  --clr-heading: var(--clr-primary);
+  --clr-icon: var(--clr-neutral);
+  --clr-footertext: var(--clr-light);
+  --clr-input-focus: var(--clr-primary);
+  --clr-checked: hsl(116, 36%, 84%);
+  --clr-link-hover: var(--clr-secondary);
+  --clr-score: var(--clr-secondary);
+
+  --clr-bg: var(--clr-light);
+  --clr-tags: var(--clr-neutral-light);
+  --clr-comment-bg: var(--clr-neutral-light);
+
+  /* Punainen ja vihreä väri virheilmoituksiin yms. yksityiskohtiin */
+  --clr-green: rgb(33, 176, 23);
+  --clr-red: rgb(195, 0, 0);
+
+  --border-radius: 1.25rem; /* Lomakkeiden, boksien yms. reunat */
+  --border-small: .35rem;
+  --icon-width: 2rem;
+  --text-small: .9rem;
+  --text-extra-small: .8rem;
+}
+
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +62,30 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+
+
+
+/* Kaikki buttonit */
+button {
+  line-height: 0; /* keskittää tekstin pystysuunnassa */
+  border: 0;
+  cursor: pointer;
+}
+
+/* Tekstibuttonit ja "buttonin" näköiset NavLinkit */
+.button, .btn-secondary, .btn-primary, .btn-success {
+  display: block;
+  line-height: 0;
+  font-weight: bold;
+  padding: 2em 2.5em;
+  border-radius: 100vmax;
+  max-height: 3rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--clr-button-text);
+  background-color: var(--clr-button-bg);
+  box-shadow: 0 1.25em 1em -1em var(--clr-button-bg);
 }
