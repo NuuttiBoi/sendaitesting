@@ -5,6 +5,7 @@ import Cell from "./Cell";
 import Header from "./Header";
 import PlusIcon from "./img/Plus";
 import Trash from "./img/Trash";
+import kuva from "./img/circle.png";
 
 const defaultColumn = {
     minWidth: 50,

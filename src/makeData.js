@@ -3,11 +3,49 @@ import {randomColor} from "./utils";
 import {useEffect, useState} from "react";
 import axios from 'axios';
 import work_types_service from "./services/work_types_service";
+const kuva = require('./img/circle.png');
+const triangle = require('./img/triangle.png');
+const star = require('./img/star.png');
+const davidStar = require('./img/davidStar.png');
+const circle = require('./img/circle.png');
+const cirlceTriangle = require('./img/circleTriangle.png');
+const heart = require('./img/heart.png');
+const spiral = require('./img/spiral.png');
+const square = require('./img/square.png');
+const cross = require('./img/cross.png');
+const pentagon = require('./img/pentagon.png');
 
 export default function MakeData(count) {
     // let data = [];
 
+    console.log(kuva);
+
     let options = [];
+
+    let kuvat = [];
+
+    kuvat = [
+        kuvat[0] = circle,
+        kuvat[1] = star,
+        kuvat[2] = davidStar,
+        kuvat[3] = cirlceTriangle,
+        kuvat[4] = cross,
+        kuvat[5] = heart,
+        kuvat[6] = pentagon,
+        kuvat[7] = square,
+        kuvat[8] = spiral,
+        kuvat[9] = triangle
+    ]
+
+        for (let j = 0; j < kuvat.length; j++) {
+            let roww = {
+                music: kuvat[j]
+            };
+            options.push({label: roww.music});
+            console.log('pushed');
+            console.log(kuvat.length);
+        }
+
 
     const [data, setData] = useState([]);
 
@@ -51,7 +89,7 @@ export default function MakeData(count) {
 
     let [row, setRow] = useState('');
 
-    const columns = data.map((item, k) => {
+    const rows = data.map((item, k) => {
         return (
             <tr key={item.id}>
                 <td>{item.work1_name}</td>
@@ -61,36 +99,44 @@ export default function MakeData(count) {
         );
     });
 
-
-    let rowsS = data.map((_,index) => {
+/*
+    let rows = data.map((_,index) => {
         let columnValues = data.map(i => data[index][i])
         return columnValues
     })
 
-    let rows = [
+ */
+
+    let columns = [
         {
             id: "_id",
             label: "work1_name",
             accessor: "work1_name",
             minWidth: 100,
-            dataType: "text",
-            options: []
+            dataType: "select",
+            options: options
         },
         {
             id: "lastName",
             label: "work2_name",
             accessor: "work2_name",
             minWidth: 100,
-            dataType: "text",
-            options: []
+            dataType: "select",
+            options: options
         },
         {
             id: "age",
             label: "work3_name",
             accessor: "work3_name",
             width: 80,
-            dataType: "text",
-            options: []
+            dataType: "select",
+            options: options,
+            Footer: (
+                <span>{
+                    // Get the total of the price
+                    <select></select>
+                }</span>
+            )
         },
         {
             id: 999999,
@@ -100,5 +146,5 @@ export default function MakeData(count) {
             dataType: "null"
         }
     ];
-    return {columns: rows, data: columns, skipReset: false};
+    return {columns: columns, data: rows, skipReset: false};
 }

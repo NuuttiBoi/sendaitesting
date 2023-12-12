@@ -1,4 +1,5 @@
 import React, {useEffect, useReducer, useState} from "react";
+import Select from 'react-select'
 import jsPDF from "jspdf";
 import "./style.css";
 import MakeData from "./makeData";
@@ -9,6 +10,16 @@ import axios from "axios";
 import work_types_service from "./services/work_types_service";
 import Pdf from "./toPdf";
 import {usePDF} from "react-to-pdf";
+import kuva from "./img/circle.png";
+import Relationship from "./Relationship";
+import { components } from 'react-select';
+const { SingleValue, Option } = components;
+const row1 = require('./img/row1.png');
+const row2 = require('./img/row2.png');
+const row3 = require('./img/row3.png');
+const row4 = require('./img/row4.png');
+const row5 = require('./img/row5.png');
+
 
 function reducer(state, action) {
   switch (action.type) {
@@ -264,7 +275,47 @@ function App() {
   )
 
 
+
+
   const [state, dispatch] = useReducer(reducer, MakeData(10));
+
+
+
+
+  const options = [
+    {
+      value: 0,
+      image: row1,
+    },
+    {
+      value: 1,
+      image: row2,
+    },
+    {
+      value: 2,
+      image: row3,
+    },
+    {
+      value: 3,
+      image: row4,
+    },
+    {
+      value: 4,
+      image: row5,
+    }
+  ];
+  const IconSingleValue = (props) => (
+      <SingleValue {...props}>
+        <img src={props.data.image} style={{ height: '30px', width: '150', borderRadius: '50%', marginRight: '10px' }}/>
+        {props.data.label}
+      </SingleValue>
+  );
+  const IconOption = (props) => (
+      <Option {...props}>
+        <img src={props.data.image} style={{ height: '30px', width: '150', borderRadius: '50%', marginRight: '10px' }}/>
+        {props.data.label}
+      </Option>
+  );
 
   // const [state, dispatch] = data;
 
@@ -289,6 +340,7 @@ function App() {
             }}
         >
           <h1 style={{ color: grey(800) }}>Create your own work table</h1>
+
         </div>
         <div style={{ overflow: "auto", display: "flex" }}>
           <div
@@ -309,7 +361,16 @@ function App() {
                 dispatch={dispatch}
                 skipReset={state.skipReset}
             />
-                <button className="button" onClick={() => toPDF()} style={{marginLeft:5, marginRight:5}}>Download PDF</button>
+                <div style={{display:"flex"}}>
+                  Table ID:
+                  <Select
+                      components={{SingleValue: IconSingleValue, Option: IconOption }}
+                      options={options}
+                  />
+                </div>
+                <button className="button" onClick={() => toPDF()} style={{marginLeft:5, marginRight:5, marginTop:75}}>
+                  Download PDF</button>
+
               </div>
             </div>
           </div>
