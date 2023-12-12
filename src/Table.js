@@ -56,6 +56,7 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
         useSortBy
     );
 
+
     function isTableResizing() {
         for (let headerGroup of headerGroups) {
             for (let column of headerGroup.headers) {

@@ -53,12 +53,15 @@ export default function MakeData(count) {
     const [work1Name, setWork1Name] = useState(null);
     const [work2Name, setWork2Name] = useState(null);
 
+    /*
     useEffect(() => {
         axios.get("http://localhost:3001/work_types")
             .then(response => setData(response.data))
             .catch(error => console.error(error));
         }
     )
+
+     */
 
 /*
     const backendItems = data.map((item,index) =>
@@ -72,7 +75,7 @@ export default function MakeData(count) {
 
  */
 
-        /*
+
         for (let i = 0; i < count; i++) {
         let row = {
             ID: i,
@@ -82,10 +85,10 @@ export default function MakeData(count) {
         };
         // options.push({label: row.music, backgroundColor: randomColor()});
 
-        // data.push(row);
+         data.push(row);
     }
 
-         */
+
 
     let [row, setRow] = useState('');
 

@@ -19,6 +19,11 @@ const row2 = require('./img/row2.png');
 const row3 = require('./img/row3.png');
 const row4 = require('./img/row4.png');
 const row5 = require('./img/row5.png');
+const symbolsRow1 = require('./img/symbolsRow1.png');
+const symbolsRow2 = require('./img/symbolsRow2.png');
+const symbolsRow3 = require('./img/symbolsRow3.png');
+const symbolsRow4 = require('./img/symbolsRow4.png');
+const symbolsRow5 = require('./img/symbolsRow5.png');
 
 
 function reducer(state, action) {
@@ -61,10 +66,10 @@ function reducer(state, action) {
       return {
         ...state,
         skipReset: true,
-        data: [...state.data, {}]
+        data: [{}, ...state.data]
 
       };
-    case "update_column_type":
+      case "update_column_type":
       const typeIndex = state.columns.findIndex(
           (column) => column.id === action.columnId
       );
@@ -261,6 +266,9 @@ function App() {
 
   const [data, setData] = useState(['']);
 
+  const [skipPageReset, setSkipPageReset] = React.useState(false)
+
+
   const [work3Name, setWork3Name] = useState(null);
   const [work1Name, setWork1Name] = useState(null);
   const [work2Name, setWork2Name] = useState(null);
@@ -277,7 +285,47 @@ function App() {
 
 
 
-  const [state, dispatch] = useReducer(reducer, MakeData(10));
+  const [state, dispatch] = useReducer(reducer, MakeData());
+
+
+
+
+  const [tableData, setTableData] = React.useState([]);
+
+  // const memoizedColumns = React.useMemo(() => columns, []);
+  const memoizedData = React.useMemo(() => tableData, [tableData]);
+
+
+
+
+
+  React.useEffect(() => {
+    setTableData(data);
+  }, []);
+
+  const handleNewRowClick = () => {
+    console.log("clicked", tableData);
+    setTableData([{}, ...tableData]);
+  };
+
+
+  const updateMyData = (rowIndex, columnId, value) => {
+    // We also turn on the flag to not reset the page
+    setSkipPageReset(true)
+    setData(old =>
+        old.map((row, index) => {
+          if (index === rowIndex) {
+            return {
+              ...old[rowIndex],
+              [columnId]: value,
+            }
+          }
+          return row
+        })
+    )
+  }
+
+
 
 
 
@@ -285,7 +333,7 @@ function App() {
   const options = [
     {
       value: 0,
-      image: row1,
+      image: symbolsRow1,
     },
     {
       value: 1,
@@ -306,13 +354,13 @@ function App() {
   ];
   const IconSingleValue = (props) => (
       <SingleValue {...props}>
-        <img src={props.data.image} style={{ height: '30px', width: '150', borderRadius: '50%', marginRight: '10px' }}/>
+        <img src={props.data.image} style={{ height: '40px', width: '250px', borderRadius: '20%', marginRight: '10px' }}/>
         {props.data.label}
       </SingleValue>
   );
   const IconOption = (props) => (
       <Option {...props}>
-        <img src={props.data.image} style={{ height: '30px', width: '150', borderRadius: '50%', marginRight: '10px' }}/>
+        <img src={props.data.image} style={{ height: '30px', width: '250px', borderRadius: '50%', marginRight: '10px' }}/>
         {props.data.label}
       </Option>
   );
@@ -353,25 +401,26 @@ function App() {
               }}
           >
             <div>
+                <button onClick={handleNewRowClick}>Add New Row</button>
               <div ref={targetRef}>
-            <Table
+                <Table
                 columns={state.columns}
                 rows={state.rows}
                 data={data}
                 dispatch={dispatch}
                 skipReset={state.skipReset}
-            />
-                <div style={{display:"flex"}}>
+                updateMyData={updateMyData}
+                skipPageReset={skipPageReset}                />
+                <div style={{display:"flex" ,fontSize:30}}>
                   Table ID:
                   <Select
                       components={{SingleValue: IconSingleValue, Option: IconOption }}
                       options={options}
                   />
                 </div>
-                <button className="button" onClick={() => toPDF()} style={{marginLeft:5, marginRight:5, marginTop:75}}>
-                  Download PDF</button>
-
               </div>
+              <button className="button" onClick={() => toPDF()} style={{marginLeft:5, marginRight:5, marginTop:75}}>
+                Download PDF</button>
             </div>
           </div>
         </div>

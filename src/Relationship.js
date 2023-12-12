@@ -11,7 +11,6 @@ export default function Relationship({value, backgroundColor}) {
                 boxSizing: "border-box",
                 height: 40,
                 backgroundColor: backgroundColor,
-                color: grey(800),
                 fontWeight: 400,
                 padding: "2px 6px",
                 borderRadius: 4,

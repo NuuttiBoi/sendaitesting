@@ -93,7 +93,7 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
 
     function getColor() {
         let match = options.find((option) => option.label === value.value);
-        return (match && match.backgroundColor) || grey(300);
+        return (match && match.backgroundColor);
     }
 
     useEffect(() => {
@@ -175,7 +175,6 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
                                             marginTop: "0.5rem",
                                             width: 120,
                                             padding: "2px 4px",
-                                            backgroundColor: grey(200),
                                             borderRadius: 4
                                         }}>
                                         <input
@@ -197,7 +196,6 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
                         <PlusIcon />
                       </span>
                                         }
-                                        backgroundColor={grey(200)}
                                     />
                                 </div>
                             </div>
