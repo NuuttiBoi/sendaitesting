@@ -42,8 +42,6 @@ export default function MakeData(count) {
                 music: kuvat[j]
             };
             options.push({label: roww.music});
-            console.log('pushed');
-            console.log(kuvat.length);
         }
 
 

@@ -1,5 +1,6 @@
 import React, {useEffect, useReducer, useState} from "react";
 import Select from 'react-select'
+import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import jsPDF from "jspdf";
 import "./style.css";
 import MakeData from "./makeData";
@@ -13,6 +14,9 @@ import {usePDF} from "react-to-pdf";
 import kuva from "./img/circle.png";
 import Relationship from "./Relationship";
 import { components } from 'react-select';
+import SortableComponent from "./sortableList";
+import {tab} from "@testing-library/user-event/dist/tab";
+import nanoid from "nanoid";
 const { SingleValue, Option } = components;
 const row1 = require('./img/row1.png');
 const row2 = require('./img/row2.png');
@@ -24,6 +28,13 @@ const symbolsRow2 = require('./img/symbolsRow2.png');
 const symbolsRow3 = require('./img/symbolsRow3.png');
 const symbolsRow4 = require('./img/symbolsRow4.png');
 const symbolsRow5 = require('./img/symbolsRow5.png');
+const heart = require('./img/heart.png');
+const spiral = require('./img/spiral.png');
+const square = require('./img/square.png');
+const cross = require('./img/cross.png');
+const pentagon = require('./img/pentagon.png');
+const star = require('./img/star.png');
+
 
 
 function reducer(state, action) {
@@ -55,6 +66,9 @@ function reducer(state, action) {
         work4_name:''
       }
 
+      state.data.push(newWork);
+      console.log(state.data);
+
       work_types_service.create(newWork)
           .then(response => {
             console.log("success", response.data)
@@ -66,8 +80,7 @@ function reducer(state, action) {
       return {
         ...state,
         skipReset: true,
-        data: [{}, ...state.data]
-
+        data: [...state.data, newWork],
       };
       case "update_column_type":
       const typeIndex = state.columns.findIndex(
@@ -273,8 +286,9 @@ function App() {
   const [work1Name, setWork1Name] = useState(null);
   const [work2Name, setWork2Name] = useState(null);
 
-  const { toPDF, targetRef } = usePDF({filename: 'page.pdf'});
+  const {toPDF, targetRef} = usePDF({filename: 'page.pdf'});
 
+  /*
   useEffect(() => {
         axios.get("http://localhost:3001/work_types")
             .then(response => setData(response.data))
@@ -282,37 +296,92 @@ function App() {
       }
   )
 
-
-
+   */
 
   const [state, dispatch] = useReducer(reducer, MakeData());
 
+  const [tableData, setTableData] = React.useState([
+    {
+      id: 1,
+      name: 'Tim',
+      age: 25,
+    },
+    {
+      id: 2,
+      name: 'Jane',
+      age: 22,
+    },
+    {
+      id: 3,
+      name: 'Jane',
+      age: 22,
+    }
+  ]);
 
-
-
-  const [tableData, setTableData] = React.useState([]);
-
-  // const memoizedColumns = React.useMemo(() => columns, []);
-  const memoizedData = React.useMemo(() => tableData, [tableData]);
-
-
-
-
+  const tabledata = [
+    {
+      id: 1,
+      name: 'Tim',
+      age: 25,
+    },
+    {
+      id: 2,
+      name: 'Jane',
+      age: 22,
+    },
+    {
+      id: 3,
+      name: 'Jane',
+      age: 22,
+    }
+  ]
+  //setTableData(tabledata);
 
   React.useEffect(() => {
-    setTableData(data);
+    setTableData(tabledata);
   }, []);
 
-  const handleNewRowClick = () => {
+
+  const HandleNewRowClick = () => {
     console.log("clicked", tableData);
-    setTableData([{}, ...tableData]);
+    setSkipPageReset(true)
+    tableData.push({work1_name: '', work2_name: '', work3_name: ''});
+    updateMyData();
+    //setTableData([{}, ...tabledata]);
   };
+
+
+  const handleAdd = () => {
+
+    const newData = {
+      id: 4,
+      name: 'Tim',
+      age: 25
+    }
+    console.log('pituus' + tabledata.length);
+    setTableData([...tableData, newData]);
+    tableData.length++;
+    console.log('pituus' + tabledata.length);
+  };
+
+
+  const handleRemove = (id) => {
+    console.log(tableData);
+    console.log(tableData.length - 2);
+    const numero = tableData.length;
+    setTableData(tableData.filter((row) => row.id !== numero));
+    //const newList = tableData.filter( li => li.id !== id);
+    console.log(tableData);
+  }
+
+
+
 
 
   const updateMyData = (rowIndex, columnId, value) => {
     // We also turn on the flag to not reset the page
     setSkipPageReset(true)
-    setData(old =>
+    setTableData(old =>
         old.map((row, index) => {
           if (index === rowIndex) {
             return {
@@ -333,43 +402,53 @@ function App() {
   const options = [
     {
       value: 0,
-      image: symbolsRow1,
+      image: heart,
     },
     {
       value: 1,
-      image: row2,
+      image: cross,
     },
     {
       value: 2,
-      image: row3,
+      image: square,
     },
     {
       value: 3,
-      image: row4,
+      image: pentagon,
     },
     {
       value: 4,
-      image: row5,
+      image: star,
     }
   ];
   const IconSingleValue = (props) => (
       <SingleValue {...props}>
-        <img src={props.data.image} style={{ height: '40px', width: '250px', borderRadius: '20%', marginRight: '10px' }}/>
+        <img src={props.data.image} style={{ height: '40px', width: '50px', borderRadius: '20%', marginRight: '10px' }}/>
         {props.data.label}
       </SingleValue>
   );
   const IconOption = (props) => (
       <Option {...props}>
-        <img src={props.data.image} style={{ height: '30px', width: '250px', borderRadius: '50%', marginRight: '10px' }}/>
+        <img src={props.data.image} style={{ height: '30px', width: '50px', borderRadius: '50%', marginRight: '10px' }}/>
         {props.data.label}
       </Option>
   );
+
+  const colourStylesRow = {
+    dropdownIndicator: styles => ({
+      ...styles,
+      color: '#FFAE12',
+    })
+  }
 
   // const [state, dispatch] = data;
 
   useEffect(() => {
     dispatch({ type: "enable_reset" });
   }, [state.columns, state.data]);
+
+
+
   return (
       <div
           style={{
@@ -390,6 +469,12 @@ function App() {
           <h1 style={{ color: grey(800) }}>Create your own work table</h1>
 
         </div>
+        <div>
+          <div style={{display:"flex", justifyContent: "center",
+            alignItems: "center"}}>
+            <button onClick={handleAdd} className="button">Add New Row</button>
+            <button onClick={handleRemove} className="button">Remove Row</button>
+          </div>
         <div style={{ overflow: "auto", display: "flex" }}>
           <div
               style={{
@@ -400,29 +485,63 @@ function App() {
                 marginRight: "auto"
               }}
           >
-            <div>
-                <button onClick={handleNewRowClick}>Add New Row</button>
+
               <div ref={targetRef}>
+                <div style={{verticalAlign:"top", left:20, width:100}}>
+                  <Select
+                      components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null }}
+                      options={options}
+                      menuPortalTarget={document.body}
+                  />
+                </div>
                 <Table
                 columns={state.columns}
                 rows={state.rows}
-                data={data}
+                data={tableData}
                 dispatch={dispatch}
                 skipReset={state.skipReset}
-                updateMyData={updateMyData}
-                skipPageReset={skipPageReset}                />
-                <div style={{display:"flex" ,fontSize:30}}>
-                  Table ID:
+                updateMyData={updateMyData}/>
+                <div style={{display:"flex", float:"right", verticalAlign:"bottom", right:20, width:100}}>
                   <Select
-                      components={{SingleValue: IconSingleValue, Option: IconOption }}
+                      components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null }}
                       options={options}
+                      menuPortalTarget={document.body}
                   />
                 </div>
+
+                <div style={{display:"flex" ,fontSize:20}}>
+                  Table ID:
+                  <Select
+                      components={
+                    {SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null}}
+                      options={options}
+                      styles={{colourStylesRow}}
+                      menuPortalTarget={document.body}
+                  />
+                  <Select
+                      components={{SingleValue: IconSingleValue, Option: IconOption,
+                        DropdownIndicator:() => null}}
+                      options={options}
+                      styles={{colourStylesRow}}
+                      menuPortalTarget={document.body}
+                  />
+                  <Select
+                      components={{SingleValue: IconSingleValue, Option: IconOption,
+                        DropdownIndicator:() => null}}
+                      options={options}
+                      styles={{colourStylesRow}}
+                      menuPortalTarget={document.body}
+                  />
+
+                </div>
               </div>
-              <button className="button" onClick={() => toPDF()} style={{marginLeft:5, marginRight:5, marginTop:75}}>
-                Download PDF</button>
+              <button className="button" onClick={() => toPDF()} style={{justifyContent: "center",
+                alignItems: "center", margin:20}}>
+                Download PDF
+              </button>
+              </div>
             </div>
-          </div>
+
         </div>
         <div
             style={{
