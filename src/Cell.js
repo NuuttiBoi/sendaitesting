@@ -66,9 +66,12 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
         }
     }
 
+    /*
     function handleAddOption(e) {
         setShowAdd(true);
     }
+
+     */
 
     const onDelete = (index, _id) => {
         // delete a row
@@ -186,18 +189,7 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
                                         />
                                     </div>
                                 )}
-                                <div
-                                    className='cursor-pointer'
-                                    style={{marginRight: "0.5rem", marginTop: "0.5rem"}}
-                                    onClick={handleAddOption}>
-                                    <Relationship
-                                        value={
-                                            <span className='svg-icon-sm svg-text'>
-                        <PlusIcon />
-                      </span>
-                                        }
-                                    />
-                                </div>
+
                             </div>
                         </div>
                     )}
