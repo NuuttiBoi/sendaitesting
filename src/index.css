@@ -89,3 +89,16 @@ button {
   background-color: var(--clr-button-bg);
   box-shadow: 0 1.25em 1em -1em var(--clr-button-bg);
 }
+.delButton{
+  display: block;
+  line-height: 0;
+  font-weight: bold;
+  padding: 2em 2.5em;
+  border-radius: 100vmax;
+  max-height: 3rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--clr-button-text);
+  background-color: darkred;
+  box-shadow: 0 1.25em 1em -1em var(--clr-button-bg);
+}

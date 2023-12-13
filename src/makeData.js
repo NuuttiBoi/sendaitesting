@@ -3,22 +3,26 @@ import {randomColor} from "./utils";
 import {useEffect, useState} from "react";
 import axios from 'axios';
 import work_types_service from "./services/work_types_service";
-const kuva = require('./img/circle.png');
-const triangle = require('./img/triangle.png');
-const star = require('./img/star.png');
-const davidStar = require('./img/davidStar.png');
-const circle = require('./img/circle.png');
-const cirlceTriangle = require('./img/circleTriangle.png');
-const heart = require('./img/heart.png');
-const spiral = require('./img/spiral.png');
-const square = require('./img/square.png');
-const cross = require('./img/cross.png');
-const pentagon = require('./img/pentagon.png');
+
+const hearts = require('./symbols/hearts.png');
+const spiral = require('./symbols/spiral.png');
+const star = require('./symbols/star.png');
+const arrow = require('./symbols/arrow.png');
+const circle = require('./symbols/circle.png');
+const flower = require('./symbols/flower.png');
+const triangle = require('./symbols/triangle.png');
+const club = require('./symbols/club.png');
+const diamond = require('./symbols/diamond.png');
+const hash = require('./symbols/hash.png');
+
+
+
+
+
+
 
 export default function MakeData(count) {
     // let data = [];
-
-    console.log(kuva);
 
     let options = [];
 
@@ -27,12 +31,12 @@ export default function MakeData(count) {
     kuvat = [
         kuvat[0] = circle,
         kuvat[1] = star,
-        kuvat[2] = davidStar,
-        kuvat[3] = cirlceTriangle,
-        kuvat[4] = cross,
-        kuvat[5] = heart,
-        kuvat[6] = pentagon,
-        kuvat[7] = square,
+        kuvat[2] = club,
+        kuvat[3] = diamond,
+        kuvat[4] = flower,
+        kuvat[5] = hearts,
+        kuvat[6] = hash,
+        kuvat[7] = arrow,
         kuvat[8] = spiral,
         kuvat[9] = triangle
     ]

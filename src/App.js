@@ -28,13 +28,20 @@ const symbolsRow2 = require('./img/symbolsRow2.png');
 const symbolsRow3 = require('./img/symbolsRow3.png');
 const symbolsRow4 = require('./img/symbolsRow4.png');
 const symbolsRow5 = require('./img/symbolsRow5.png');
-const heart = require('./img/heart.png');
-const spiral = require('./img/spiral.png');
+
+const hearts = require('./symbols/hearts.png');
+const spiral = require('./symbols/spiral.png');
 const square = require('./img/square.png');
 const cross = require('./img/cross.png');
 const pentagon = require('./img/pentagon.png');
-const star = require('./img/star.png');
-
+const star = require('./symbols/star.png');
+const arrow = require('./symbols/arrow.png');
+const circle = require('./symbols/circle.png');
+const flower = require('./symbols/flower.png');
+const triangle = require('./symbols/triangle.png');
+const club = require('./symbols/club.png');
+const diamond = require('./symbols/diamond.png');
+const hash = require('./symbols/hash.png');
 
 
 function reducer(state, action) {
@@ -300,39 +307,24 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, MakeData());
 
-  const [tableData, setTableData] = React.useState([
-    {
-      id: 1,
-      name: 'Tim',
-      age: 25,
-    },
-    {
-      id: 2,
-      name: 'Jane',
-      age: 22,
-    },
-    {
-      id: 3,
-      name: 'Jane',
-      age: 22,
-    }
-  ]);
+  const [tableData, setTableData] = React.useState([]);
 
+  /*
   const tabledata = [
     {
       id: 1,
-      name: 'Tim',
-      age: 25,
+      name: '',
+      age: '',
     },
     {
       id: 2,
-      name: 'Jane',
-      age: 22,
+      name: '',
+      age: '',
     },
     {
       id: 3,
-      name: 'Jane',
-      age: 22,
+      name: '',
+      age: '',
     }
   ]
   //setTableData(tabledata);
@@ -340,6 +332,8 @@ function App() {
   React.useEffect(() => {
     setTableData(tabledata);
   }, []);
+
+   */
 
 
   const HandleNewRowClick = () => {
@@ -352,29 +346,56 @@ function App() {
 
 
   const handleAdd = () => {
-
     const newData = {
-      id: 4,
-      name: 'Tim',
-      age: 25
+      id: Math.floor(Math.random()*20),
+      name: '',
+      age: ''
     }
-    console.log('pituus' + tabledata.length);
+    // tableData.push(newData);
     setTableData([...tableData, newData]);
-    tableData.length++;
-    console.log('pituus' + tabledata.length);
   };
 
+  console.log(tableData.length);
 
-  const handleRemove = (id) => {
+  const handleRemove = () => {
     console.log(tableData);
-    console.log(tableData.length - 2);
-    const numero = tableData.length;
-    setTableData(tableData.filter((row) => row.id !== numero));
+    console.log(tableData.length);
+    const newVals = [];
+    for(let i = 0; i < tableData.length-1; i++){
+      newVals[i] = {
+        id: Math.floor(Math.random()*20),
+        name: '',
+        age: '',
+      }
+    }
+    console.log(newVals);
+    // setTableData([newVals]);
+    // const numero = tableData.length;
+    /*
+    if(tableData.length > 1 && tableData.length < 2){
+      setTableData(tableData.filter((row) => row.id !== tableData.length-1));
+    } else if(tableData.length >= 2){
+      const newVals = [];
+      for(let i = 0; i < tableData.length - 1; i++){
+        newVals[i] = {
+          id: Math.floor(Math.random()*20),
+          name: '',
+          age: '',
+        }
+      }
+      console.log(newVals);
+      setTableData([newVals]);
+    } else {
+      console.log('mit vittua');
+      setTableData([]);
+    }
+
+     */
+    // tableData.pop();
     //const newList = tableData.filter( li => li.id !== id);
     console.log(tableData);
+    setTableData(newVals);
   }
-
-
 
 
 
@@ -395,30 +416,50 @@ function App() {
   }
 
 
-
-
-
-
   const options = [
     {
       value: 0,
-      image: heart,
+      image: hearts,
     },
     {
       value: 1,
-      image: cross,
+      image: diamond,
     },
     {
       value: 2,
-      image: square,
+      image: circle,
     },
     {
       value: 3,
-      image: pentagon,
+      image: star,
     },
     {
       value: 4,
-      image: star,
+      image: flower,
+    },
+    {
+      value: 5,
+      image: hearts,
+    },
+    {
+      value: 6,
+      image: club,
+    },
+    {
+      value: 7,
+      image: spiral,
+    },
+    {
+      value: 8,
+      image: triangle,
+    },
+    {
+      value: 9,
+      image: arrow,
+    },
+    {
+      value: 10,
+      image: hash,
     }
   ];
   const IconSingleValue = (props) => (
@@ -473,7 +514,7 @@ function App() {
           <div style={{display:"flex", justifyContent: "center",
             alignItems: "center"}}>
             <button onClick={handleAdd} className="button">Add New Row</button>
-            <button onClick={handleRemove} className="button">Remove Row</button>
+            <button onClick={handleRemove} className="delButton">Remove Row</button>
           </div>
         <div style={{ overflow: "auto", display: "flex" }}>
           <div
@@ -487,7 +528,7 @@ function App() {
           >
 
               <div ref={targetRef}>
-                <div style={{verticalAlign:"top", left:20, width:100}}>
+                <div style={{verticalAlign:"top", left:20, width:80}}>
                   <Select
                       components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null }}
                       options={options}
@@ -501,7 +542,7 @@ function App() {
                 dispatch={dispatch}
                 skipReset={state.skipReset}
                 updateMyData={updateMyData}/>
-                <div style={{display:"flex", float:"right", verticalAlign:"bottom", right:20, width:100}}>
+                <div style={{display:"flex", float:"right", verticalAlign:"bottom", right:20, width:80}}>
                   <Select
                       components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null }}
                       options={options}
@@ -514,6 +555,20 @@ function App() {
                   <Select
                       components={
                     {SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null}}
+                      options={options}
+                      styles={{colourStylesRow}}
+                      menuPortalTarget={document.body}
+                  />
+                  <Select
+                      components={{SingleValue: IconSingleValue, Option: IconOption,
+                        DropdownIndicator:() => null}}
+                      options={options}
+                      styles={{colourStylesRow}}
+                      menuPortalTarget={document.body}
+                  />
+                  <Select
+                      components={{SingleValue: IconSingleValue, Option: IconOption,
+                        DropdownIndicator:() => null}}
                       options={options}
                       styles={{colourStylesRow}}
                       menuPortalTarget={document.body}
