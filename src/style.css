@@ -241,9 +241,10 @@ html {
 .td {
     white-space: nowrap;
     margin: 0;
-    border-bottom: 1px solid #e0e0e0;
-    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
     position: relative;
+    border-color: black;
 }
 
 .text-align-right {
@@ -296,4 +297,9 @@ html {
 
 .th-content{
     color:black;
+    border-color: #4b4298;
+}
+
+.table{
+    border-color: black;
 }

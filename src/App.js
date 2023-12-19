@@ -59,23 +59,26 @@ function reducer(state, action) {
             ...state.columns[optionIndex],
             options: [
               ...state.columns[optionIndex].options,
-              { label: action.option, backgroundColor: action.backgroundColor }
+              { label: action.option }
             ]
           },
           ...state.columns.slice(optionIndex + 1, state.columns.length)
         ]
       };
     case "add_row":
+      console.log('uuden rivin lisays');
       const newWork = {
         work1_name: '',
         work2_name: '',
         work3_name: '',
         work4_name:''
       }
-
-      state.data.push(newWork);
+      console.log('moi');
+      console.log(state.data);
       console.log(state.data);
 
+
+      /*
       work_types_service.create(newWork)
           .then(response => {
             console.log("success", response.data)
@@ -83,11 +86,19 @@ function reducer(state, action) {
           .catch(error => {
             console.log(error)
           })
+       */
+
       console.log('saving ', newWork)
+/*
+      data: state.data.map((row) => ({
+        ...row,
+        [action.columnId]: row[action.columnId] + ""
+      }))
+ */
       return {
-        ...state,
-        skipReset: true,
-        data: [...state.data, newWork],
+        data:{
+
+        }
       };
       case "update_column_type":
       const typeIndex = state.columns.findIndex(
@@ -295,6 +306,7 @@ function App() {
 
   const {toPDF, targetRef} = usePDF({filename: 'page.pdf'});
 
+  // Maybe a database isn't necessary for this kind of simple application?
   /*
   useEffect(() => {
         axios.get("http://localhost:3001/work_types")
@@ -305,6 +317,7 @@ function App() {
 
    */
 
+  // Reducer sets the state
   const [state, dispatch] = useReducer(reducer, MakeData());
 
   const [tableData, setTableData] = React.useState([]);
@@ -527,7 +540,7 @@ function App() {
               }}
           >
 
-              <div ref={targetRef}>
+            <div ref={targetRef}>
                 <div style={{verticalAlign:"top", left:20, width:80}}>
                   <Select
                       components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null }}
@@ -587,7 +600,6 @@ function App() {
                       styles={{colourStylesRow}}
                       menuPortalTarget={document.body}
                   />
-
                 </div>
               </div>
               <button className="button" onClick={() => toPDF()} style={{justifyContent: "center",

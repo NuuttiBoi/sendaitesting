@@ -94,6 +94,7 @@ export default function MakeData(count) {
 
     let [row, setRow] = useState('');
 
+        /*
     const rows = data.map((item, k) => {
         return (
             <tr key={item.id}>
@@ -103,6 +104,7 @@ export default function MakeData(count) {
             </tr>
         );
     });
+         */
 
 /*
     let rows = data.map((_,index) => {
@@ -151,5 +153,13 @@ export default function MakeData(count) {
             dataType: "null"
         }
     ];
-    return {columns: columns, data: rows, skipReset: false};
+    let rows = [
+        {
+            id: Math.floor(Math.random()*20),
+            name: '',
+            age: ''
+        }
+        ];
+    return {columns: columns, rows: rows, skipReset: false};
+    // return {columns: columns, data: rows, skipReset: false};
 }

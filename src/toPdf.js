@@ -1,4 +1,4 @@
-import { usePDF } from 'react-to-pdf';
+import { usePDF} from 'react-to-pdf';
 import Table from "./Table";
 
 export default function Pdf() {

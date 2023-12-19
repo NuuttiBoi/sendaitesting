@@ -36,6 +36,9 @@
     transform: rotate(360deg);
   }
 }
+.ReactTable{
+  border-color: #4b4298;
+}
 
 
 
