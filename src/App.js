@@ -207,7 +207,7 @@ function reducer(state, action) {
       return {
         ...state,
         skipReset: true,
-        data: state.data.map((row, index) => {
+        data: state.data?.map((row, index) => {
           if (index === action.rowIndex) {
             return {
               ...state.data[action.rowIndex],
