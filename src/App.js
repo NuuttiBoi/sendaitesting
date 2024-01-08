@@ -137,7 +137,7 @@ function reducer(state, action) {
             };
           } else {
             let options = [];
-            state.data.forEach((row) => {
+            state.data?.forEach((row) => {
               if (row[action.columnId]) {
                 options.push({
                   label: row[action.columnId],
