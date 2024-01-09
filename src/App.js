@@ -231,7 +231,7 @@ function reducer(state, action) {
             id: leftId,
             label: "Column",
             accessor: leftId,
-            dataType: "text",
+            dataType: "select",
             created: action.focus && true,
             options: []
           },
@@ -252,7 +252,7 @@ function reducer(state, action) {
             id: rightId,
             label: "Column",
             accessor: rightId,
-            dataType: "text",
+            dataType: "select",
             created: action.focus && true,
             options: []
           },
