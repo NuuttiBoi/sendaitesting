@@ -11,7 +11,6 @@ import MultiIcon from "./img/Multi";
 import HashIcon from "./img/Hash";
 import PlusIcon from "./img/Plus";
 import {shortId} from "./utils";
-import work_types_service from "./services/work_types_service";
 
 export default function Header({
                                    column: {id, created, label, dataType, getResizerProps, getHeaderProps},
@@ -60,7 +59,6 @@ export default function Header({
         },
         {
             onClick: (e) => {
-                work_types_service.newColumn().then(r => console.log(r));
                 dataDispatch({type: "update_column_header", columnId: id, label: header});
                 dataDispatch({type: "add_column_to_right", columnId: id, focus: false});
                 setExpanded(false);

@@ -2,7 +2,6 @@ import { faker } from '@faker-js/faker';
 import {randomColor} from "./utils";
 import {useEffect, useState} from "react";
 import axios from 'axios';
-import work_types_service from "./services/work_types_service";
 
 const hearts = require('./symbols/hearts.png');
 const spiral = require('./symbols/spiral.png');

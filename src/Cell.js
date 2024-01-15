@@ -5,7 +5,6 @@ import {usePopper} from "react-popper";
 import {grey} from "./colors";
 import PlusIcon from "./img/Plus";
 import {randomColor} from "./utils";
-import work_types_service from "./services/work_types_service";
 import Trash from "./img/Trash";
 
 export default function Cell({value: initialValue, row: {index}, column: {id, dataType, options}, dataDispatch}) {

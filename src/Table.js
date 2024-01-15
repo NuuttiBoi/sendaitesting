@@ -181,9 +181,6 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
                         );
                     })}
                 </div>
-                <div>
-                    <button onClick={addNewRow}>Add row</button>
-                </div>
             </div>
         </>
     );

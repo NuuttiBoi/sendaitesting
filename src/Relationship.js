@@ -1,9 +1,4 @@
 import React from "react";
-import {grey} from "./colors";
-const kuva = require('./img/circle.png');
-const triangle = require('./img/triangle.png');
-
-
 export default function Relationship({value, backgroundColor}) {
     return (
         <span
@@ -17,7 +12,7 @@ export default function Relationship({value, backgroundColor}) {
                 textTransform: "capitalize",
                 display: "inline-block"
             }}>
-            {<img src={value} height={60} width={35}/>}
+            {<img src={value} height={60} width={35} alt='kuva'/>}
     </span>
     );
 }

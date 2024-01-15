@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer, useState} from "react";
+ import React, {useEffect, useReducer, useState} from "react";
 import Select from 'react-select'
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import jsPDF from "jspdf";
@@ -8,32 +8,18 @@ import Table from "./Table";
 import { randomColor, shortId } from "./utils";
 import { grey } from "./colors";
 import axios from "axios";
-import work_types_service from "./services/work_types_service";
 import Pdf from "./toPdf";
 import {usePDF} from "react-to-pdf";
-import kuva from "./img/circle.png";
 import Relationship from "./Relationship";
 import { components } from 'react-select';
 import SortableComponent from "./sortableList";
 import {tab} from "@testing-library/user-event/dist/tab";
 import nanoid from "nanoid";
 const { SingleValue, Option } = components;
-const row1 = require('./img/row1.png');
-const row2 = require('./img/row2.png');
-const row3 = require('./img/row3.png');
-const row4 = require('./img/row4.png');
-const row5 = require('./img/row5.png');
-const symbolsRow1 = require('./img/symbolsRow1.png');
-const symbolsRow2 = require('./img/symbolsRow2.png');
-const symbolsRow3 = require('./img/symbolsRow3.png');
-const symbolsRow4 = require('./img/symbolsRow4.png');
-const symbolsRow5 = require('./img/symbolsRow5.png');
+
 
 const hearts = require('./symbols/hearts.png');
 const spiral = require('./symbols/spiral.png');
-const square = require('./img/square.png');
-const cross = require('./img/cross.png');
-const pentagon = require('./img/pentagon.png');
 const star = require('./symbols/star.png');
 const arrow = require('./symbols/arrow.png');
 const circle = require('./symbols/circle.png');
@@ -45,6 +31,7 @@ const hash = require('./symbols/hash.png');
 
 
 function reducer(state, action) {
+  // Handles different cases for columns and cells
   switch (action.type) {
     case "add_option_to_column":
       const optionIndex = state.columns.findIndex(
@@ -358,6 +345,7 @@ function App() {
   };
 
 
+  // Adds row to table
   const handleAdd = () => {
     const newData = {
       id: Math.floor(Math.random()*20),
@@ -370,6 +358,7 @@ function App() {
 
   console.log(tableData.length);
 
+  // Removes row from table
   const handleRemove = () => {
     console.log(tableData);
     console.log(tableData.length);
