@@ -683,6 +683,8 @@ function App() {
                       components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null }}
                       options={options}
                       menuPortalTarget={document.body}
+                      styles={{colourStylesRow}}
+                      autoSize={true}
                   />
                 </div>
                 <Table
@@ -692,11 +694,14 @@ function App() {
                 dispatch={dispatch}
                 skipReset={state.skipReset}
                 updateMyData={updateMyData}/>
-                <div style={{display:"flex", float:"right", verticalAlign:"bottom", right:20, width:80}}>
+                <div style={{display:"flex", float:"right", verticalAlign:"bottom", right:20, width:100,fontSize:20}}>
                   <Select
                       components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null }}
                       options={options}
+                      styles={{colourStylesRow}}
+                      autoSize={true}
                       menuPortalTarget={document.body}
+
                   />
                 </div>
 
@@ -706,6 +711,7 @@ function App() {
                     {SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null}}
                       options={options}
                       styles={{colourStylesRow}}
+                      autoSize={true}
                       menuPortalTarget={document.body}
                   />
                   <Select
@@ -713,6 +719,7 @@ function App() {
                         DropdownIndicator:() => null}}
                       options={options}
                       styles={{colourStylesRow}}
+                      autoSize={true}
                       menuPortalTarget={document.body}
                   />
                   <Select
@@ -720,6 +727,7 @@ function App() {
                         DropdownIndicator:() => null}}
                       options={options}
                       styles={{colourStylesRow}}
+                      autoSize={true}
                       menuPortalTarget={document.body}
                   />
                   <Select
@@ -727,6 +735,7 @@ function App() {
                         DropdownIndicator:() => null}}
                       options={options}
                       styles={{colourStylesRow}}
+                      autoSize={true}
                       menuPortalTarget={document.body}
                   />
                   <Select
@@ -734,6 +743,7 @@ function App() {
                         DropdownIndicator:() => null}}
                       options={options}
                       styles={{colourStylesRow}}
+                      autoSize={true}
                       menuPortalTarget={document.body}
                   />
                 </div>
