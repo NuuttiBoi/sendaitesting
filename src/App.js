@@ -678,7 +678,7 @@ function App() {
           >
 
             <div ref={targetRef}>
-                <div style={{verticalAlign:"top", left:20, width:80}}>
+                <div style={{verticalAlign:"top", left:20, width:100}}>
                   <Select
                       components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null }}
                       options={options}
@@ -766,9 +766,14 @@ function App() {
             }}
         >
         </div>
+        <footer style={{alignItems:"center",fontSize:10, marginLeft:5, marginBottom:0}}>
+          Icon by: <a href="https://www.flaticon.com/free-animated-icons/calendar" title="calendar animated icons">Calendar
+          animated icons created by Freepik - Flaticon</a>
+        </footer>
       </div>
+
 
   );
 }
 
-export default App;
+ export default App;
