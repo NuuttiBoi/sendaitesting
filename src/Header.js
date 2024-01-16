@@ -68,14 +68,6 @@ export default function Header({
         },
         {
             onClick: (e) => {
-                dataDispatch({type: "add_row", focus: false});
-                setExpanded(false);
-            },
-            icon: <ArrowRightIcon />,
-            label: "add row"
-        },
-        {
-            onClick: (e) => {
                 dataDispatch({type: "update_column_header", columnId: id, label: header});
                 dataDispatch({type: "delete_column", columnId: id});
                 setExpanded(false);

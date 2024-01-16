@@ -701,7 +701,6 @@ function App() {
                 </div>
 
                 <div style={{display:"flex" ,fontSize:20}}>
-                  Table ID:
                   <Select
                       components={
                     {SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null}}
