@@ -123,7 +123,58 @@ function reducer(state, action) {
               skipReset: true
             };
           } else {
-            let options = [];
+            const options = [
+              {
+                value: 0,
+                label: hearts,
+                image: hearts,
+              },
+              {
+                value: 1,
+                image: diamond,
+                label: diamond,
+              },
+              {
+                value: 2,
+                image: circle,
+                label: circle,
+              },
+              {
+                value: 3,
+                image: star,
+                label: star,
+              },
+              {
+                value: 4,
+                image: flower,
+                label: flower,
+              },
+              {
+                value: 5,
+                image: arrow,
+                label: arrow,
+              },
+              {
+                value: 6,
+                image: club,
+                label: club,
+              },
+              {
+                value: 7,
+                label: spiral,
+                image: spiral,
+              },
+              {
+                value: 8,
+                image: triangle,
+                label: triangle,
+              },
+              {
+                value: 9,
+                image: hash,
+                label: hash,
+              }
+            ];
             state.data?.forEach((row) => {
               if (row[action.columnId]) {
                 options.push({
@@ -220,7 +271,56 @@ function reducer(state, action) {
             accessor: leftId,
             dataType: "select",
             created: action.focus && true,
-            options: []
+            options: [{
+              value: 0,
+              label: hearts,
+              image: hearts,
+            },
+              {
+                value: 1,
+                image: diamond,
+                label: diamond,
+              },
+              {
+                value: 2,
+                image: circle,
+                label: circle,
+              },
+              {
+                value: 3,
+                image: star,
+                label: star,
+              },
+              {
+                value: 4,
+                image: flower,
+                label: flower,
+              },
+              {
+                value: 5,
+                image: arrow,
+                label: arrow,
+              },
+              {
+                value: 6,
+                image: club,
+                label: club,
+              },
+              {
+                value: 7,
+                label: spiral,
+                image: spiral,
+              },
+              {
+                value: 8,
+                image: triangle,
+                label: triangle,
+              },
+              {
+                value: 9,
+                image: hash,
+                label: hash,
+              }]
           },
           ...state.columns.slice(leftIndex, state.columns.length)
         ]
@@ -241,7 +341,56 @@ function reducer(state, action) {
             accessor: rightId,
             dataType: "select",
             created: action.focus && true,
-            options: []
+            options: [{
+              value: 0,
+              label: hearts,
+              image: hearts,
+            },
+              {
+                value: 1,
+                image: diamond,
+                label: diamond,
+              },
+              {
+                value: 2,
+                image: circle,
+                label: circle,
+              },
+              {
+                value: 3,
+                image: star,
+                label: star,
+              },
+              {
+                value: 4,
+                image: flower,
+                label: flower,
+              },
+              {
+                value: 5,
+                image: arrow,
+                label: arrow,
+              },
+              {
+                value: 6,
+                image: club,
+                label: club,
+              },
+              {
+                value: 7,
+                label: spiral,
+                image: spiral,
+              },
+              {
+                value: 8,
+                image: triangle,
+                label: triangle,
+              },
+              {
+                value: 9,
+                image: hash,
+                label: hash,
+              }]
           },
           ...state.columns.slice(rightIndex + 1, state.columns.length)
         ]
@@ -355,7 +504,6 @@ function App() {
     // tableData.push(newData);
     setTableData([...tableData, newData]);
   };
-
   console.log(tableData.length);
 
   // Removes row from table
@@ -417,7 +565,6 @@ function App() {
     )
   }
 
-
   const options = [
     {
       value: 0,
@@ -464,6 +611,7 @@ function App() {
       image: hash,
     }
   ];
+
   const IconSingleValue = (props) => (
       <SingleValue {...props}>
         <img src={props.data.image} style={{ height: '40px', width: '50px', borderRadius: '20%', marginRight: '10px' }}/>

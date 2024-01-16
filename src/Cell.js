@@ -14,7 +14,7 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
     const [showSelect, setShowSelect] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const onChange = (e) => {
-        setValue({value: e.target.value, update: true});
+        setValue({value: e.target.value, update: false});
     };
     const [showAdd, setShowAdd] = useState(false);
     const [showRemove, setShowRemove] = useState(false);

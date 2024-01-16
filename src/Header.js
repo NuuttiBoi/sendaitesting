@@ -88,7 +88,7 @@ export default function Header({
     const types = [
         {
             onClick: (e) => {
-                dataDispatch({type: "update_column_type", columnId: id, dataType: "select"});
+                dataDispatch({type: "update_column_type", columnId: id, dataType: "select", options:'homo'});
                 setShowType(false);
                 setExpanded(false);
             },
