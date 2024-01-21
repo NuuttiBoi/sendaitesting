@@ -90,7 +90,7 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
 
     const {styles, attributes} = usePopper(selectRef, selectPop, {
         placement: "bottom-start",
-        strategy: "fixed"
+        strategy: "fixed",
     });
 
     function getColor() {
@@ -141,7 +141,8 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
                 <>
                     <div
                         ref={setSelectRef}
-                        className='cell-padding d-flex cursor-default align-items-center flex-1'
+                        className='cell-padding d-flex cursor-default align-items-center flex-1
+                        height 5000'
                         onClick={() => setShowSelect(true)}>
                         {value.value && <Relationship value={value.value} backgroundColor={getColor()} />}
                     </div>
@@ -158,7 +159,7 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
                                 maxWidth: 320,
                                 padding: "0.75rem"
                             }}>
-                            <div className='d-flex flex-wrap-wrap' style={{marginTop: "-0.5rem"}}>
+                            <div className='d-flex flex-wrap-wrap' style={{marginTop: "-0.5rem",}}>
                                 {options.map((option) => (
                                     <div
                                         className='cursor-pointer'

@@ -1,5 +1,6 @@
  import React, {useEffect, useReducer, useState} from "react";
-import Select from 'react-select'
+import Select from 'react-select';
+ import ReactSlider from "react-slider";
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import jsPDF from "jspdf";
 import "./style.css";
@@ -7,6 +8,7 @@ import MakeData from "./makeData";
 import Table from "./Table";
 import { randomColor, shortId } from "./utils";
 import { grey } from "./colors";
+import Slider  from "./Slider";
 import axios from "axios";
 import Pdf from "./toPdf";
 import {usePDF} from "react-to-pdf";
@@ -435,11 +437,7 @@ function App() {
 
   const [skipPageReset, setSkipPageReset] = React.useState(false)
 
-
-  const [work3Name, setWork3Name] = useState(null);
-  const [work1Name, setWork1Name] = useState(null);
-  const [work2Name, setWork2Name] = useState(null);
-
+  
   const {toPDF, targetRef} = usePDF({filename: 'page.pdf'});
 
   // Maybe a database isn't necessary for this kind of simple application?
@@ -483,16 +481,6 @@ function App() {
   }, []);
 
    */
-
-
-  const HandleNewRowClick = () => {
-    console.log("clicked", tableData);
-    setSkipPageReset(true)
-    tableData.push({work1_name: '', work2_name: '', work3_name: ''});
-    updateMyData();
-    //setTableData([{}, ...tabledata]);
-  };
-
 
   // Adds row to table
   const handleAdd = () => {
@@ -546,9 +534,6 @@ function App() {
     console.log(tableData);
     setTableData(newVals);
   }
-
-
-
   const updateMyData = (rowIndex, columnId, value) => {
     // We also turn on the flag to not reset the page
     setSkipPageReset(true)
@@ -625,6 +610,7 @@ function App() {
       </Option>
   );
 
+  // Style for the React select dropdown menu
   const colourStylesRow = {
     dropdownIndicator: styles => ({
       ...styles,
@@ -638,6 +624,16 @@ function App() {
     dispatch({ type: "enable_reset" });
   }, [state.columns, state.data]);
 
+
+  const [rangeSliderValue, setRangeSliderValue] = useState(50);
+
+  const handleRangeSliderChange = (e) => {
+    setRangeSliderValue(e.target.value);
+    const tableCs = document.getElementsByClassName('table-container');
+    tableCs.styles={backgroundColor:':#000000'};
+    console.log('haista vittu');
+    console.log(e.target.value);
+  };
 
 
   return (
@@ -687,13 +683,17 @@ function App() {
                       autoSize={true}
                   />
                 </div>
+              <div className='table-container'
+                  style={{/*{minHeight:`${rangeSliderValue}%`}*/}}>
                 <Table
                 columns={state.columns}
                 rows={state.rows}
+                manualRowResize={true}
                 data={tableData}
                 dispatch={dispatch}
                 skipReset={state.skipReset}
                 updateMyData={updateMyData}/>
+              </div>
                 <div style={{display:"flex", float:"right", verticalAlign:"bottom", right:20, width:100,fontSize:20}}>
                   <Select
                       components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null }}
@@ -770,6 +770,24 @@ function App() {
           Icon by: <a href="https://www.flaticon.com/free-animated-icons/calendar" title="calendar animated icons">Calendar
           animated icons created by Freepik - Flaticon</a>
         </footer>
+        <ReactSlider>
+          className="horizontal-slider"
+          thumbClassName="example-thumb"
+          trackClassName="example-track"
+          renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+        </ReactSlider>
+        <div className='sliderContainer'>
+          <Slider>
+            <input
+                type="range"
+                min="1"
+                max="100"
+                value={rangeSliderValue}
+                onChange={handleRangeSliderChange}
+                className="slider"
+            />
+          </Slider>
+        </div>
       </div>
 
 
