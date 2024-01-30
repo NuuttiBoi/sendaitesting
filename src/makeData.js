@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import axios from 'axios';
 
 const hearts = require('./symbols/hearts.png');
+const square = require('./symbols/square.png');
+const cross = require('./symbols/cross.png');
 const spiral = require('./symbols/spiral.png');
 const star = require('./symbols/star.png');
 const arrow = require('./symbols/arrow.png');
@@ -31,12 +33,12 @@ export default function MakeData(count) {
         kuvat[0] = circle,
         kuvat[1] = star,
         kuvat[2] = club,
-        kuvat[3] = diamond,
+        kuvat[3] = square,
         kuvat[4] = flower,
         kuvat[5] = hearts,
         kuvat[6] = hash,
         kuvat[7] = arrow,
-        kuvat[8] = spiral,
+        kuvat[8] = cross,
         kuvat[9] = triangle
     ]
 
@@ -137,12 +139,6 @@ export default function MakeData(count) {
             width: 80,
             dataType: "select",
             options: options,
-            Footer: (
-                <span>{
-                    // Get the total of the price
-                    <select></select>
-                }</span>
-            )
         },
         {
             id: 999999,

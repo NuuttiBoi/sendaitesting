@@ -12,15 +12,63 @@ import Slider  from "./Slider";
 import axios from "axios";
 import Pdf from "./toPdf";
 import {usePDF} from "react-to-pdf";
+import generatePDF, { Resolution, Margin } from 'react-to-pdf';
 import Relationship from "./Relationship";
 import { components } from 'react-select';
 import SortableComponent from "./sortableList";
 import {tab} from "@testing-library/user-event/dist/tab";
 import nanoid from "nanoid";
+
+import { rotatePlugin } from '@react-pdf-viewer/rotate';
+import { Viewer } from '@react-pdf-viewer/core';
+ import PDFViewer from "./pdfView";
+
+
+
 const { SingleValue, Option } = components;
+
+const options = {
+   // default is `save`
+   method: 'open',
+   // default is Resolution.MEDIUM = 3, which should be enough, higher values
+   // increases the image quality but also the size of the PDF, so be careful
+   // using values higher than 10 when having multiple pages generated, it
+   // might cause the page to crash or hang.
+   resolution: Resolution.HIGH,
+   page: {
+     // margin is in MM, default is Margin.NONE = 0
+     margin: Margin.SMALL,
+     // default is 'A4'
+     format: 'letter',
+     rotate: '90',
+     // default is 'portrait'
+     orientation: 'landscape',
+   },
+   canvas: {
+     // default is 'image/jpeg' for better size performance
+     mimeType: 'image/png',
+     qualityRatio: 1
+   },
+   // Customize any value passed to the jsPDF instance and html2canvas
+   // function. You probably will not need this and things can break,
+   // so use with caution.
+   overrides: {
+     // see https://artskydj.github.io/jsPDF/docs/jsPDF.html for more options
+     pdf: {
+       compress: true
+     },
+     // see https://html2canvas.hertzen.com/configuration for more options
+     canvas: {
+       useCORS: true
+     }
+   },
+ };
+const getTargetElement = () => document.getElementById('target-ref');
 
 
 const hearts = require('./symbols/hearts.png');
+const square = require('./symbols/square.png');
+const cross = require('./symbols/cross.png');
 const spiral = require('./symbols/spiral.png');
 const star = require('./symbols/star.png');
 const arrow = require('./symbols/arrow.png');
@@ -133,8 +181,8 @@ function reducer(state, action) {
               },
               {
                 value: 1,
-                image: diamond,
-                label: diamond,
+                image: square,
+                label: square,
               },
               {
                 value: 2,
@@ -163,8 +211,8 @@ function reducer(state, action) {
               },
               {
                 value: 7,
-                label: spiral,
-                image: spiral,
+                label: cross,
+                image: cross,
               },
               {
                 value: 8,
@@ -280,8 +328,8 @@ function reducer(state, action) {
             },
               {
                 value: 1,
-                image: diamond,
-                label: diamond,
+                image: square,
+                label: square,
               },
               {
                 value: 2,
@@ -310,8 +358,8 @@ function reducer(state, action) {
               },
               {
                 value: 7,
-                label: spiral,
-                image: spiral,
+                label: cross,
+                image: cross,
               },
               {
                 value: 8,
@@ -350,8 +398,8 @@ function reducer(state, action) {
             },
               {
                 value: 1,
-                image: diamond,
-                label: diamond,
+                image: square,
+                label: square,
               },
               {
                 value: 2,
@@ -380,8 +428,8 @@ function reducer(state, action) {
               },
               {
                 value: 7,
-                label: spiral,
-                image: spiral,
+                label: cross,
+                image: cross,
               },
               {
                 value: 8,
@@ -597,6 +645,44 @@ function App() {
     }
   ];
 
+
+  const Options = {
+    // default is `save`
+    method: 'open',
+    // default is Resolution.MEDIUM = 3, which should be enough, higher values
+    // increases the image quality but also the size of the PDF, so be careful
+    // using values higher than 10 when having multiple pages generated, it
+    // might cause the page to crash or hang.
+    resolution: Resolution.LOW,
+    page: {
+      // margin is in MM, default is Margin.NONE = 0
+      margin: Margin.SMALL,
+      // default is 'A4'
+      format: 'letter',
+      rotate: '90',
+      // default is 'portrait'
+      orientation: 'landscape',
+    },
+    canvas: {
+      // default is 'image/jpeg' for better size performance
+      mimeType: 'image/png',
+      qualityRatio: 1
+    },
+    // Customize any value passed to the jsPDF instance and html2canvas
+    // function. You probably will not need this and things can break,
+    // so use with caution.
+    overrides: {
+      // see https://artskydj.github.io/jsPDF/docs/jsPDF.html for more options
+      pdf: {
+        compress: true
+      },
+      // see https://html2canvas.hertzen.com/configuration for more options
+      canvas: {
+        useCORS: true
+      }
+    },
+  };
+
   const IconSingleValue = (props) => (
       <SingleValue {...props}>
         <img src={props.data.image} style={{ height: '40px', width: '50px', borderRadius: '20%', marginRight: '10px' }}/>
@@ -636,6 +722,37 @@ function App() {
   };
 
 
+  function rotate90() {
+    /*
+    document.querySelector('.table').style.transform
+        = 'rotate(90deg)';
+    document.querySelector('#tableId').style.transform
+        = 'rotate(90deg)';
+    document.querySelector('#firstSelect').style.transform
+        = 'rotate(90deg)';
+    document.querySelector('#secondSelect').style.transform
+        = 'rotate(90deg)'
+     */
+
+    document.querySelector('.table').style.transform
+        = 'rotate(90deg)';
+    document.querySelector('#firstSelect').style.transform
+        = 'rotate(90deg)';
+    document.querySelector('#secondSelect').style.transform
+        = 'rotate(90deg)';
+    document.querySelector('#tableId').style.transform
+        = 'rotate(90deg)';
+    document.querySelector('#tableId').style.transform
+        = 'flex';
+    document.querySelector('#tableId').style.transform
+        = 'left:20';
+    targetRef.transform = 'rotate(90deg)';
+  }
+
+  const rotatePluginInstance = rotatePlugin();
+
+
+
   return (
       <div
           style={{
@@ -656,7 +773,7 @@ function App() {
           <h1 style={{ color: grey(800) }}>Create your own work table</h1>
 
         </div>
-        <div>
+        <div className="container">
           <div style={{display:"flex", justifyContent: "center",
             alignItems: "center"}}>
             <button onClick={handleAdd} className="button">Add New Row</button>
@@ -673,87 +790,121 @@ function App() {
               }}
           >
 
-            <div ref={targetRef}>
-                <div style={{verticalAlign:"top", left:20, width:100}}>
-                  <Select
-                      components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null }}
-                      options={options}
-                      menuPortalTarget={document.body}
-                      styles={{colourStylesRow}}
-                      autoSize={true}
-                  />
-                </div>
+            <div id="targetContainer">
+            <div ref={targetRef} id="targetDiv" style={{minHeight:100, minWidth:100}}>
+
               <div className='table-container'
-                  style={{/*{minHeight:`${rangeSliderValue}%`}*/}}>
+                  style={{minHeight:`${rangeSliderValue}%`}}
+              >
+                <div style={{verticalAlign: "top", left: 20, width: 100}} id="firstSelect">
+                  <Select
+                      components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
+                      options={options}
+                      menuPortalTarget={document.body}
+                      styles={{colourStylesRow}}
+                      autoSize={true}
+                  />
+                </div>
                 <Table
-                columns={state.columns}
-                rows={state.rows}
-                manualRowResize={true}
-                data={tableData}
-                dispatch={dispatch}
-                skipReset={state.skipReset}
-                updateMyData={updateMyData}/>
+                    columns={state.columns}
+                    rows={state.rows}
+                    manualRowResize={true}
+                    data={tableData}
+                    dispatch={dispatch}
+                    skipReset={state.skipReset}
+                    pageSize={100}
+                    rotate={90}
+                    updateMyData={updateMyData}/>
+                <div style={{verticalAlign: "bottom", position:'fixed', right: 280,  width: 100}} id="secondSelect">
+                </div>
               </div>
-                <div style={{display:"flex", float:"right", verticalAlign:"bottom", right:20, width:100,fontSize:20}}>
+              <div style={{
+                display: "flex",
+                float: "right",
+                verticalAlign: "bottom",
+                right: 20,
+                width: 100,
+                fontSize: 20
+              }}>
+                <div style={{verticalAlign: "bottom",  width: 100}} id="secondSelect">
                   <Select
-                      components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null }}
+                      components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
                       options={options}
                       styles={{colourStylesRow}}
                       autoSize={true}
                       menuPortalTarget={document.body}
 
                   />
-                </div>
-
-                <div style={{display:"flex" ,fontSize:20}}>
-                  <Select
-                      components={
-                    {SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator:() => null}}
-                      options={options}
-                      styles={{colourStylesRow}}
-                      autoSize={true}
-                      menuPortalTarget={document.body}
-                  />
-                  <Select
-                      components={{SingleValue: IconSingleValue, Option: IconOption,
-                        DropdownIndicator:() => null}}
-                      options={options}
-                      styles={{colourStylesRow}}
-                      autoSize={true}
-                      menuPortalTarget={document.body}
-                  />
-                  <Select
-                      components={{SingleValue: IconSingleValue, Option: IconOption,
-                        DropdownIndicator:() => null}}
-                      options={options}
-                      styles={{colourStylesRow}}
-                      autoSize={true}
-                      menuPortalTarget={document.body}
-                  />
-                  <Select
-                      components={{SingleValue: IconSingleValue, Option: IconOption,
-                        DropdownIndicator:() => null}}
-                      options={options}
-                      styles={{colourStylesRow}}
-                      autoSize={true}
-                      menuPortalTarget={document.body}
-                  />
-                  <Select
-                      components={{SingleValue: IconSingleValue, Option: IconOption,
-                        DropdownIndicator:() => null}}
-                      options={options}
-                      styles={{colourStylesRow}}
-                      autoSize={true}
-                      menuPortalTarget={document.body}
-                  />
-                </div>
               </div>
-              <button className="button" onClick={() => toPDF()} style={{justifyContent: "center",
-                alignItems: "center", margin:20}}>
-                Download PDF
-              </button>
+              </div>
+
+              <div id="tableId" style={{display: "flex", fontSize: 20}}>
+                <Select
+                    components={
+                      {SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
+                    options={options}
+                    styles={{colourStylesRow}}
+                    autoSize={true}
+                    menuPortalTarget={document.body}
+                />
+                <Select
+                    components={{
+                      SingleValue: IconSingleValue, Option: IconOption,
+                      DropdownIndicator: () => null
+                    }}
+                    options={options}
+                    styles={{colourStylesRow}}
+                    autoSize={true}
+                    menuPortalTarget={document.body}
+                />
+                <Select
+                    components={{
+                      SingleValue: IconSingleValue, Option: IconOption,
+                      DropdownIndicator: () => null
+                    }}
+                    options={options}
+                    styles={{colourStylesRow}}
+                    autoSize={true}
+                    menuPortalTarget={document.body}
+                />
+                <Select
+                    components={{
+                      SingleValue: IconSingleValue, Option: IconOption,
+                      DropdownIndicator: () => null
+                    }}
+                    options={options}
+                    styles={{colourStylesRow}}
+                    autoSize={true}
+                    menuPortalTarget={document.body}
+                />
+                <Select
+                    components={{
+                      SingleValue: IconSingleValue, Option: IconOption,
+                      DropdownIndicator: () => null
+                    }}
+                    options={options}
+                    styles={{colourStylesRow}}
+                    autoSize={true}
+                    menuPortalTarget={document.body}
+                />
               </div>
             </div>
+            </div>
+
+            <div>
+              <button className="button" onClick={() => generatePDF(targetRef, Options)}>Generate PDF</button>
+              <div id="content-id">
+                Content to be generated to PDF
+              </div>
+            </div>
+            <button className="button" onClick={() => toPDF()} style={{
+              justifyContent: "center",
+              alignItems: "center", margin: 20
+            }}>
+              Download PDF
+            </button>
+          </div>
+        </div>
 
         </div>
         <div
@@ -788,6 +939,10 @@ function App() {
             />
           </Slider>
         </div>
+
+        <button className="button" onClick={rotate90}>Rotate</button>
+
+
       </div>
 
 

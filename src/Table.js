@@ -153,9 +153,12 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
 
         return false;
     }
+
+    /*
     function addNewRow(){
         dataDispatch({type: "add_row", focus: false})
     }
+     */
 
     return (
         <>

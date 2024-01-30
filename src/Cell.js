@@ -141,8 +141,7 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
                 <>
                     <div
                         ref={setSelectRef}
-                        className='cell-padding d-flex cursor-default align-items-center flex-1
-                        height 5000'
+                        className='cell-padding d-flex cursor-default align-items-center flex-1'
                         onClick={() => setShowSelect(true)}>
                         {value.value && <Relationship value={value.value} backgroundColor={getColor()} />}
                     </div>
