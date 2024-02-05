@@ -139,7 +139,8 @@ export default function MakeData(count) {
             width: 80,
             dataType: "select",
             options: options,
-        },
+        }
+        /*
         {
             id: 999999,
             width: 20,
@@ -147,6 +148,8 @@ export default function MakeData(count) {
             disableResizing: true,
             dataType: "null"
         }
+
+         */
     ];
     let rows = [
         {

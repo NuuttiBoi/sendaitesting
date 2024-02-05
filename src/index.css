@@ -50,6 +50,46 @@
 
 
 
+
+
+
+/* Värit tummassa teemassa */
+.darkTheme {
+  --clr-light: #dddddd;
+  --clr-dark: #1f1f1f;
+  --clr-primary: #662ec6;
+  --clr-primary-light: #2b2847;
+  --clr-secondary: var(--clr-light);
+  --clr-neutral: var(--clr-light); /* Buttonien, input-kenttien yms. reunat */
+  --clr-neutral-light: rgb(53, 53, 53);
+
+  --clr-text: var(--clr-light);
+  --clr-headerlink: var(--clr-light);
+  --clr-header-bg: var(--clr-dark);
+  --clr-button-bg: var(--clr-primary);
+  --clr-button-hover: var(--clr-light);
+  --clr-button-hover-text: var(--clr-dark);
+  --clr-button-text: var(--clr-light);
+  --clr-thumb-icon: var(--clr-icon);
+  --clr-title: var(--clr-light);
+  --clr-heading: var(--clr-light);
+  --clr-icon: var(--clr-light);
+  --clr-footer-bg: var(--clr-dark);
+  --clr-footertext: var(--clr-light);
+  --clr-input-focus: var(--clr-light);
+  --clr-checked: hsl(116, 36%, 84%);
+  --clr-link-hover: var(--clr-secondary);
+  --clr-bg: var(--clr-dark);
+  --clr-tags: var(--clr-primary-light);
+  --clr-score: var(--clr-light);
+}
+
+.darkTheme .button {
+  box-shadow: none;
+}
+
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -128,7 +168,7 @@ button {
 
 .customSlider-track.customSlider-track-0 {
   /* color of the track before the thumb */
-  background: blue;
+  background: darkgreen;
 }
 
 .customSlider-thumb {
@@ -154,4 +194,144 @@ button {
   width: 1.5px;
   height: 8px;
   background-color: darkgray;
+}
+
+
+
+
+
+
+.darkTheme .scoresContainer {
+  --clr-score: var(--clr-light);
+}
+
+.themeButtons {
+  display: flex;
+  justify-content: space-between;
+  gap: .6rem;
+  min-height: 1.5rem;
+}
+
+.themeButton {
+  display: block;
+  position: relative;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.themeButton input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.themeButton .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 100vmax;
+  border: 1px solid #fff;
+}
+
+.themeButton .checkmark.light {
+  background: linear-gradient(-50deg, var(--clr-light-primary), var(--clr-light-secondary));
+}
+
+.themeButton .checkmark.dark {
+  background: linear-gradient(-50deg, var(--clr-dark-primary), var(--clr-dark-secondary));
+}
+
+.themeButton .checkmark.secret {
+  background: linear-gradient(-50deg, var(--clr-secret-primary), var(--clr-secret-secondary));
+}
+
+.themeButton input:checked ~ .checkmark {
+  box-shadow: 0 0 0 .15rem #fff;
+}
+
+
+
+
+
+.main-nav {
+  position: relative;
+  padding: 1.5rem 3rem;
+  align-items: center;
+}
+
+.navlink, .navlink:visited {
+  display: grid;
+  place-content: center;
+  min-width: 12rem;
+  border-radius: 100vmax;
+  line-height: 0;
+  font-weight: bold;
+  padding: 1.9em 2.5em;
+  max-height: 3rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--clr-primary);
+  background-color: var(--clr-bg);
+  border: 2px solid var(--clr-headerlink);
+}
+
+.navlink:hover {
+  background-color: var(--clr-primary);
+  color: var(--clr-light);
+}
+
+.navlink.loginButton, .navlink.loginButton:visited {
+  background-color: var(--clr-button-bg);
+  color: var(--clr-button-text);
+}
+
+.navlink.loginButton:hover {
+  background-color: transparent;
+  border: none;
+  color: var(--clr-button-bg);
+}
+
+.navlink.loginButton.loggedIn {
+  background-color: transparent;
+  border: 0;
+  color: var(--clr-button-bg);
+}
+
+.navlink.loginButton.loggedIn:hover, .darkTheme .navlink.loginButton.loggedIn:hover {
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+.darkTheme .navlink.loginButton {
+  border: 2px solid var(--clr-button-bg);
+  background-color: var(--clr-button-bg);
+  color: var(--clr-button-text);
+}
+
+.darkTheme .navlink.loginButton.loggedIn:hover {
+  border: 0;
+  color: var(--clr-button-text);
+}
+
+.darkTheme .main-nav ul .navlink:hover {
+  color: var(--clr-dark);
+  background-color: var(--clr-light);
+  border: 2px solid var(--clr-light);
+}
+
+.darkTheme .table {
+  background-color: #eeeeee;
+}
+
+.darkTheme .h1 {
+  color: #eeeeee;
 }

@@ -18,10 +18,14 @@ import { components } from 'react-select';
 import SortableComponent from "./sortableList";
 import {tab} from "@testing-library/user-event/dist/tab";
 import nanoid from "nanoid";
+ import './Darkmode/darkmode.css'
+
 
 import { rotatePlugin } from '@react-pdf-viewer/rotate';
 import { Viewer } from '@react-pdf-viewer/core';
  import PDFViewer from "./pdfView";
+ import slider from "./Slider";
+ import YoutubeEmbed from "./YoutubeEmbed";
 
 
 
@@ -481,6 +485,20 @@ function reducer(state, action) {
 
 function App() {
 
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () => {
+    if (theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+  };
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
+
+
   const [data, setData] = useState(['']);
 
   const [skipPageReset, setSkipPageReset] = React.useState(false)
@@ -605,7 +623,7 @@ function App() {
     },
     {
       value: 1,
-      image: diamond,
+      image: square,
     },
     {
       value: 2,
@@ -629,7 +647,7 @@ function App() {
     },
     {
       value: 7,
-      image: spiral,
+      image: cross,
     },
     {
       value: 8,
@@ -656,17 +674,19 @@ function App() {
     resolution: Resolution.LOW,
     page: {
       // margin is in MM, default is Margin.NONE = 0
-      margin: Margin.SMALL,
+      margin: Margin.NONE,
       // default is 'A4'
-      format: 'letter',
-      rotate: '90',
+
+      // pitäisi olla a4 käännettynä
+      format: 'A4',
       // default is 'portrait'
       orientation: 'landscape',
     },
     canvas: {
       // default is 'image/jpeg' for better size performance
       mimeType: 'image/png',
-      qualityRatio: 1
+      qualityRatio: 1,
+      height:100
     },
     // Customize any value passed to the jsPDF instance and html2canvas
     // function. You probably will not need this and things can break,
@@ -678,7 +698,7 @@ function App() {
       },
       // see https://html2canvas.hertzen.com/configuration for more options
       canvas: {
-        useCORS: true
+        useCORS: true,
       }
     },
   };
@@ -711,16 +731,25 @@ function App() {
   }, [state.columns, state.data]);
 
 
-  const [rangeSliderValue, setRangeSliderValue] = useState(50);
+  const [rangeSliderValue, setRangeSliderValue] = useState(500);
 
   const handleRangeSliderChange = (e) => {
     setRangeSliderValue(e.target.value);
-    const tableCs = document.getElementsByClassName('table-container');
-    tableCs.styles={backgroundColor:':#000000'};
-    console.log('haista vittu');
-    console.log(e.target.value);
+    console.log(slider.get());
+    console.log('moi');
   };
 
+
+  const [minHeight, setMinHeight] = useState('');
+
+  const handleBigger = (e) => {
+    setMinHeight(5000);
+    document.querySelector('.table').style.height
+        = minHeight;
+    console.log('bigger');
+    document.querySelectorAll(".td").minHeight
+        = minHeight;
+  }
 
   function rotate90() {
     /*
@@ -751,7 +780,14 @@ function App() {
 
   const rotatePluginInstance = rotatePlugin();
 
+  const changeWidth = (event) => {
+    document.querySelector('.table').style.transform
+        = 'rotate(45deg)';
+  }
 
+  const changeMinHeight = (event) => {
+    setMinHeight(event.target.value);
+  }
 
   return (
       <div
@@ -770,141 +806,157 @@ function App() {
               flexDirection: "column"
             }}
         >
-          <h1 style={{ color: grey(800) }}>Create your own work table</h1>
+          <h1 >Create Your Own Work Table</h1>
 
         </div>
         <div className="container">
-          <div style={{display:"flex", justifyContent: "center",
-            alignItems: "center"}}>
+          <div className={`App ${theme}`}>
+            <button id="darkmodeButton" onClick={toggleTheme} className="navlink">
+              Darkmode
+            </button>
+          </div>
+          <div style={{
+            display: "flex", justifyContent: "center",
+            alignItems: "center"
+          }}>
             <button onClick={handleAdd} className="button">Add New Row</button>
             <button onClick={handleRemove} className="delButton">Remove Row</button>
           </div>
-        <div style={{ overflow: "auto", display: "flex" }}>
-          <div
-              style={{
-                flex: "1 1 auto",
-                padding: "1rem",
-                maxWidth: 1000,
-                marginLeft: "auto",
-                marginRight: "auto"
-              }}
-          >
+          <div style={{overflow: "auto", display: "flex"}}>
+            <div
+                style={{
+                  flex: "1 1 auto",
+                  padding: "1rem",
+                  marginLeft: "auto",
+                  marginRight: "auto"
+                }}
+            >
 
-            <div id="targetContainer">
-            <div ref={targetRef} id="targetDiv" style={{minHeight:100, minWidth:100}}>
+              <div id="targetContainer">
+                <div ref={targetRef} id="targetDiv" style={{minHeight: `${minHeight}`, minWidth: 100}}>
 
-              <div className='table-container'
-                  style={{minHeight:`${rangeSliderValue}%`}}
-              >
-                <div style={{verticalAlign: "top", left: 20, width: 100}} id="firstSelect">
-                  <Select
-                      components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
-                      options={options}
-                      menuPortalTarget={document.body}
-                      styles={{colourStylesRow}}
-                      autoSize={true}
-                  />
-                </div>
-                <Table
-                    columns={state.columns}
-                    rows={state.rows}
-                    manualRowResize={true}
-                    data={tableData}
-                    dispatch={dispatch}
-                    skipReset={state.skipReset}
-                    pageSize={100}
-                    rotate={90}
-                    updateMyData={updateMyData}/>
-                <div style={{verticalAlign: "bottom", position:'fixed', right: 280,  width: 100}} id="secondSelect">
+                  <div className='table-container'
+                      //style={{minHeight: `${rangeSliderValue}%`}}
+                       style={{minHeight: `${minHeight}`}}
+                  >
+                    <div style={{verticalAlign: "top", left: 20, width: 100}} id="firstSelect">
+                      <Select
+                          components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
+                          options={options}
+                          menuPortalTarget={document.body}
+                          styles={{colourStylesRow}}
+                          autoSize={true}
+                      />
+                    </div>
+                    <Table id="reactTable"
+                        columns={state.columns}
+                        rows={state.rows}
+                        style={{height: '100%'}}
+                        minHeight={minHeight}
+                        height={minHeight}
+                        manualRowResize={true}
+                        autoRowResize={true}
+                        data={tableData}
+                        dispatch={dispatch}
+                        skipReset={state.skipReset}
+                        pageSize={100}
+                        rotate={90}
+                        updateMyData={updateMyData}/>
+                    <div style={{verticalAlign: "bottom", position: 'fixed', right: 280, width: 100}} id="secondSelect">
+                    </div>
+                  </div>
+                  <div style={{
+                    display: "flex",
+                    float: "right",
+                    verticalAlign: "bottom",
+                    right: 20,
+                    width: 100,
+                    fontSize: 20,
+                    height: minHeight
+                  }}>
+                    <div style={{verticalAlign: "bottom", width: 100}} id="secondSelect">
+                      <Select
+                          components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
+                          options={options}
+                          styles={{colourStylesRow}}
+                          autoSize={true}
+                          menuPortalTarget={document.body}
+
+                      />
+                    </div>
+                  </div>
+
+                  <div id="tableId" style={{display: "flex", fontSize: 20}}>
+                    <Select
+                        components={
+                          {SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
+                        options={options}
+                        styles={{colourStylesRow}}
+                        autoSize={true}
+                        menuPortalTarget={document.body}
+                    />
+                    <Select
+                        components={{
+                          SingleValue: IconSingleValue, Option: IconOption,
+                          DropdownIndicator: () => null
+                        }}
+                        options={options}
+                        styles={{colourStylesRow}}
+                        autoSize={true}
+                        menuPortalTarget={document.body}
+                    />
+                    <Select
+                        components={{
+                          SingleValue: IconSingleValue, Option: IconOption,
+                          DropdownIndicator: () => null
+                        }}
+                        options={options}
+                        styles={{colourStylesRow}}
+                        autoSize={true}
+                        menuPortalTarget={document.body}
+                    />
+                    <Select
+                        components={{
+                          SingleValue: IconSingleValue, Option: IconOption,
+                          DropdownIndicator: () => null
+                        }}
+                        options={options}
+                        styles={{colourStylesRow}}
+                        autoSize={true}
+                        menuPortalTarget={document.body}
+                    />
+                    <Select
+                        components={{
+                          SingleValue: IconSingleValue, Option: IconOption,
+                          DropdownIndicator: () => null
+                        }}
+                        options={options}
+                        styles={{colourStylesRow}}
+                        autoSize={true}
+                        menuPortalTarget={document.body}
+                    />
+                  </div>
                 </div>
               </div>
+
               <div style={{
-                display: "flex",
-                float: "right",
-                verticalAlign: "bottom",
-                right: 20,
-                width: 100,
-                fontSize: 20
+                display: "flex", justifyContent: "center",
+                alignItems: "center"
               }}>
-                <div style={{verticalAlign: "bottom",  width: 100}} id="secondSelect">
-                  <Select
-                      components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
-                      options={options}
-                      styles={{colourStylesRow}}
-                      autoSize={true}
-                      menuPortalTarget={document.body}
-
-                  />
-              </div>
-              </div>
-
-              <div id="tableId" style={{display: "flex", fontSize: 20}}>
-                <Select
-                    components={
-                      {SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
-                    options={options}
-                    styles={{colourStylesRow}}
-                    autoSize={true}
-                    menuPortalTarget={document.body}
-                />
-                <Select
-                    components={{
-                      SingleValue: IconSingleValue, Option: IconOption,
-                      DropdownIndicator: () => null
-                    }}
-                    options={options}
-                    styles={{colourStylesRow}}
-                    autoSize={true}
-                    menuPortalTarget={document.body}
-                />
-                <Select
-                    components={{
-                      SingleValue: IconSingleValue, Option: IconOption,
-                      DropdownIndicator: () => null
-                    }}
-                    options={options}
-                    styles={{colourStylesRow}}
-                    autoSize={true}
-                    menuPortalTarget={document.body}
-                />
-                <Select
-                    components={{
-                      SingleValue: IconSingleValue, Option: IconOption,
-                      DropdownIndicator: () => null
-                    }}
-                    options={options}
-                    styles={{colourStylesRow}}
-                    autoSize={true}
-                    menuPortalTarget={document.body}
-                />
-                <Select
-                    components={{
-                      SingleValue: IconSingleValue, Option: IconOption,
-                      DropdownIndicator: () => null
-                    }}
-                    options={options}
-                    styles={{colourStylesRow}}
-                    autoSize={true}
-                    menuPortalTarget={document.body}
-                />
+                <button className="button" onClick={() => generatePDF(targetRef, Options)}>
+                  PDF(A5)
+                </button>
+                <div id="content-id">
+                </div>
+                <button className="button" onClick={() => toPDF()} style={{
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}>
+                  PDF(A4)
+                </button>
               </div>
             </div>
-            </div>
-
-            <div>
-              <button className="button" onClick={() => generatePDF(targetRef, Options)}>Generate PDF</button>
-              <div id="content-id">
-                Content to be generated to PDF
-              </div>
-            </div>
-            <button className="button" onClick={() => toPDF()} style={{
-              justifyContent: "center",
-              alignItems: "center", margin: 20
-            }}>
-              Download PDF
-            </button>
           </div>
-        </div>
 
         </div>
         <div
@@ -917,30 +969,41 @@ function App() {
             }}
         >
         </div>
-        <footer style={{alignItems:"center",fontSize:10, marginLeft:5, marginBottom:0}}>
+
+        <div id="videoContainer" style={{display: "flex", justifyContent: 'center', margin: 20}}>
+          <iframe id="myFrame" width={rangeSliderValue}
+                  height="315" src="https://www.youtube.com/embed/t8IJOo3XlEg?si=G4NdFC4cdWQHMe1h"
+                  title="YouTube video player" frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen></iframe>
+        </div>
+
+
+        <footer style={{alignItems: "center", fontSize: 10, marginLeft: 5, marginBottom: 0}}>
           Icon by: <a href="https://www.flaticon.com/free-animated-icons/calendar" title="calendar animated icons">Calendar
           animated icons created by Freepik - Flaticon</a>
         </footer>
-        <ReactSlider>
-          className="horizontal-slider"
-          thumbClassName="example-thumb"
-          trackClassName="example-track"
-          renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-        </ReactSlider>
+
         <div className='sliderContainer'>
           <Slider>
             <input
                 type="range"
-                min="1"
-                max="100"
+                min="300"
+                max="600"
                 value={rangeSliderValue}
-                onChange={handleRangeSliderChange}
+                onChange={(value) =>handleRangeSliderChange(value)}
                 className="slider"
             />
           </Slider>
         </div>
 
         <button className="button" onClick={rotate90}>Rotate</button>
+
+        <input
+            type="text"
+            value={minHeight}
+            onChange={changeMinHeight}
+        />
 
 
       </div>
