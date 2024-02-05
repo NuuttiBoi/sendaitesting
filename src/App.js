@@ -232,8 +232,7 @@ function reducer(state, action) {
             state.data?.forEach((row) => {
               if (row[action.columnId]) {
                 options.push({
-                  label: row[action.columnId],
-                  backgroundColor: randomColor()
+                  label: row[action.columnId]
                 });
               }
             });

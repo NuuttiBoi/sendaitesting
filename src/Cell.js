@@ -30,26 +30,7 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
         }
     }, [value, dataDispatch, id, index]);
 
-    /*
-    const updateWork = () => {
-        fetch("http://localhost:3001/updateWork", {
-                method: "POST",
-                crossdomain: "true",
-                headers: {
-                    "Content-type": "application-json",
-                    Accept: "application-json",
-                    "Access-Control-Allow-Origin": "*",
-                }, body: JSON.stringify(
-                    {id:location.state._id,
-                        work1_name:'vitun homo',
-                        work2_name:'paksa',
-                        work3_name:'neeker'
-            }),
-            }).then((res) => res.json)
-            .then((data) => console.log(data))
-    }
 
-     */
 
     function handleOptionKeyDown(e) {
         if (e.key === "Enter") {
@@ -65,12 +46,6 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
         }
     }
 
-    /*
-    function handleAddOption(e) {
-        setShowAdd(true);
-    }
-
-     */
 
     const onDelete = (index, _id) => {
         // delete a row

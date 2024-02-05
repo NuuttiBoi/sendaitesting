@@ -1,13 +1,12 @@
 import ReactSlider from "react-slider";
 import { useState } from "react";
 
-
+// Slider for adjustomg the size of the video frame
 const Slider = () => {
     const [currentValue, setCurrentValue] = useState(0);
 
     const handleChange = (e) => {
         setCurrentValue(e);
-        console.log('haista vittu');
         document.getElementById("myFrame").width = e;
         document.getElementsByClassName("table").minWidth = e;
 

@@ -95,23 +95,11 @@ export default function Header({
             },
             icon: <TextIcon />,
             label: "Text"
-        },
-        {
-            onClick: (e) => {
-                dataDispatch({type: "update_column_type", columnId: id, dataType: "number"});
-                setShowType(false);
-                setExpanded(false);
-            },
-            icon: <HashIcon />,
-            label: "Number"
         }
     ];
 
     let propertyIcon;
     switch (dataType) {
-        case "number":
-            propertyIcon = <HashIcon />;
-            break;
         case "text":
             propertyIcon = <TextIcon />;
             break;
