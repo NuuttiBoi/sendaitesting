@@ -558,10 +558,21 @@ function App() {
     // tableData.push(newData);
     setTableData([...tableData, newData]);
     console.log(tableData.length + 'NYKYINEN PITUUS');
-    if (tableData.length > 2){
-      alert('WARNING: Adding another row will go over the current page limit.' +
-          'If you wish to make more rows, please adjust the row height.');
+
+    const tableH = document.getElementById('targetContainer');
+    console.log(parseInt(tableH.style.height));
+    if (targetRef.current.clientHeight > 960){
+      alert('WARNING: Adding another row will go over the current page limit,' +
+      'If you wish to make more rows, please adjust the row height.');
     }
+    console.log(targetRef.current.clientHeight);
+
+    if (tableData.length > 2){
+      // alert('WARNING: Adding another row will go over the current page limit.' +
+        //  'If you wish to make more rows, please adjust the row height.');
+    }
+
+
   };
   console.log(tableData.length);
 
@@ -670,38 +681,23 @@ function App() {
 
 
   const Options = {
-    // default is `save`
     method: 'open',
-    // default is Resolution.MEDIUM = 3, which should be enough, higher values
-    // increases the image quality but also the size of the PDF, so be careful
-    // using values higher than 10 when having multiple pages generated, it
-    // might cause the page to crash or hang.
     resolution: Resolution.LOW,
     page: {
-      // margin is in MM, default is Margin.NONE = 0
       margin: Margin.NONE,
-      // default is 'A4'
-
       // pitäisi olla a4 käännettynä
       format: 'A4',
-      // default is 'portrait'
       orientation: 'landscape',
     },
     canvas: {
-      // default is 'image/jpeg' for better size performance
       mimeType: 'image/png',
       qualityRatio: 1,
       height:100
     },
-    // Customize any value passed to the jsPDF instance and html2canvas
-    // function. You probably will not need this and things can break,
-    // so use with caution.
     overrides: {
-      // see https://artskydj.github.io/jsPDF/docs/jsPDF.html for more options
       pdf: {
         compress: true
       },
-      // see https://html2canvas.hertzen.com/configuration for more options
       canvas: {
         useCORS: true,
       }
@@ -829,22 +825,6 @@ function App() {
       changeText('Hide Options');
     }
   }
-  const showText = () => {
-    const show = 'Show Options';
-    const hide = 'Hide Options';
-    if( tableSlider.style.display !== 'none'){
-      document.getElementById('tableSlider').style.display='none';
-      document.getElementById('heightForm').style.display='none';
-      return show;
-    } else {
-      document.getElementById('tableSlider').style.display='block';
-      document.getElementById('heightForm').style.display='block';
-      return hide;
-    }
-  }
-
-  // const pdfBut = document.getElementById('pdfButton');
-  // pdfBut.addEventListener('click',onClicked);
 
   return (
       <div
@@ -891,7 +871,6 @@ function App() {
 
               <div id="targetContainer">
                 <div ref={targetRef} id="targetDiv" style={{minHeight: `${minHeight}`, minWidth: 100}}>
-
                   <div className='table-container'
                       //style={{minHeight: `${rangeSliderValue}%`}}
                        style={{minHeight: `${minHeight}`}}
