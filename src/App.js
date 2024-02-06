@@ -1,5 +1,6 @@
- import React, {useEffect, useReducer, useState} from "react";
-import Select from 'react-select';
+ import React, {useEffect, useLayoutEffect, useReducer, useState} from "react";
+import {useRef} from "react";
+ import Select from 'react-select';
  import ReactSlider from "react-slider";
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import jsPDF from "jspdf";
@@ -18,12 +19,11 @@ import { components } from 'react-select';
 import SortableComponent from "./sortableList";
 import {tab} from "@testing-library/user-event/dist/tab";
 import nanoid from "nanoid";
- import './Darkmode/darkmode.css'
+import './Darkmode/darkmode.css'
 
 
 import { rotatePlugin } from '@react-pdf-viewer/rotate';
 import { Viewer } from '@react-pdf-viewer/core';
- import PDFViewer from "./pdfView";
  import slider from "./Slider";
  import YoutubeEmbed from "./YoutubeEmbed";
 
@@ -83,6 +83,7 @@ const club = require('./symbols/club.png');
 const diamond = require('./symbols/diamond.png');
 const hash = require('./symbols/hash.png');
 
+// const tableRef = useRef();
 
 function reducer(state, action) {
   // Handles different cases for columns and cells
@@ -556,6 +557,11 @@ function App() {
     }
     // tableData.push(newData);
     setTableData([...tableData, newData]);
+    console.log(tableData.length + 'NYKYINEN PITUUS');
+    if (tableData.length > 2){
+      alert('WARNING: Adding another row will go over the current page limit.' +
+          'If you wish to make more rows, please adjust the row height.');
+    }
   };
   console.log(tableData.length);
 
@@ -787,6 +793,36 @@ function App() {
   const changeMinHeight = (event) => {
     setMinHeight(event.target.value);
   }
+  const tableRef = useRef();
+
+  const ChangeRowHeight = () => {
+    console.log('Muutetaan rivien korkeutta');
+    // tableRef.current.getElementsByClassName('.tr').style.height=10 + 'px';
+    // tableRef.current.getElementsByClassName('.tr').style.height=10+'px';
+    // document.querySelectorAll('.table td').height = 10 + 'px';
+    // tableRef.current.rows.style.height=50 + 'px';
+    // const poyta = document.getElementsByClassName('table');
+    // poyta.maxHeight=100 + 'px';
+    //const td = document.querySelectorAll(".table td");
+    //td.height=500 + 'px';
+    console.log(document.getElementsByClassName('.td'));
+    //document.getElementsByClassName('.tr').style.height=10 + 'px';
+  }
+
+  const onClicked = () =>{
+    const tableSlider = document.getElementById('tableSlider');
+    const heightForm = document.getElementById('heightForm');
+    if( tableSlider.style.display !== 'none'){
+      document.getElementById('tableSlider').style.display='none';
+      document.getElementById('heightForm').style.display='none';
+    } else {
+      document.getElementById('tableSlider').style.display='block';
+      document.getElementById('heightForm').style.display='block';
+    }
+  }
+
+  // const pdfBut = document.getElementById('pdfButton');
+  // pdfBut.addEventListener('click',onClicked);
 
   return (
       <div
@@ -848,19 +884,20 @@ function App() {
                       />
                     </div>
                     <Table id="reactTable"
-                        columns={state.columns}
-                        rows={state.rows}
-                        style={{height: '100%'}}
-                        minHeight={minHeight}
-                        height={minHeight}
-                        manualRowResize={true}
-                        autoRowResize={true}
-                        data={tableData}
-                        dispatch={dispatch}
-                        skipReset={state.skipReset}
-                        pageSize={100}
-                        rotate={90}
-                        updateMyData={updateMyData}/>
+                           ref={tableRef}
+                           columns={state.columns}
+                           rows={state.rows}
+                           style={{height: '100%'}}
+                           minHeight={minHeight}
+                           height={minHeight}
+                           manualRowResize={true}
+                           autoRowResize={true}
+                           data={tableData}
+                           dispatch={dispatch}
+                           skipReset={state.skipReset}
+                           pageSize={100}
+                           rotate={90}
+                           updateMyData={updateMyData}/>
                     <div style={{verticalAlign: "bottom", position: 'fixed', right: 280, width: 100}} id="secondSelect">
                     </div>
                   </div>
@@ -873,7 +910,7 @@ function App() {
                     fontSize: 20,
                     height: minHeight
                   }}>
-                    <div style={{verticalAlign: "bottom", width: 100}} id="secondSelect">
+                    <div style={{verticalAlign: "bottom", width: 100, position: 'relative'}} id="secondSelect">
                       <Select
                           components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
                           options={options}
@@ -942,7 +979,7 @@ function App() {
                 display: "flex", justifyContent: "center",
                 alignItems: "center"
               }}>
-                <button className="button" onClick={() => generatePDF(targetRef, Options)}>
+                <button id="pdfButton" className="button" onClick={() => generatePDF(targetRef, Options)}>
                   PDF(A5)
                 </button>
                 <div id="content-id">
@@ -954,6 +991,8 @@ function App() {
                   PDF(A4)
                 </button>
               </div>
+              <button className="button" onClick={onClicked} style={{
+                justifyContent: "center"}}>Hide Options</button>
             </div>
           </div>
 
@@ -998,11 +1037,17 @@ function App() {
 
         <button className="button" onClick={rotate90}>Rotate</button>
 
+        {/*
+        <button className="button" onClick={onClicked}></button>
+
         <input
             type="text"
             value={minHeight}
             onChange={changeMinHeight}
         />
+
+        <button className='button' onClick={ChangeRowHeight}></button>
+        */}
 
 
       </div>

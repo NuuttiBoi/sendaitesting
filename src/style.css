@@ -199,7 +199,6 @@ html {
     padding: 0;
     display: flex;
     flex-direction: column;
-    min-height: 200px;
     background-color: white;
 }
 
@@ -421,3 +420,5 @@ html {
     -webkit-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
 }
+
+
