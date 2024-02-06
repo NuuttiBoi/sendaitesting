@@ -809,15 +809,37 @@ function App() {
     //document.getElementsByClassName('.tr').style.height=10 + 'px';
   }
 
+  const tableSlider = document.getElementById('tableSlider');
+
+  const [btnText, setBtnText] = useState('Hide Options');
+
+  // Changes the text according to the current selection.
+  const changeText = (x) => setBtnText(x);
+
+  // Hides the elements of the React table, that are not necessary to show
+  // in the PDF file.
   const onClicked = () =>{
-    const tableSlider = document.getElementById('tableSlider');
-    const heightForm = document.getElementById('heightForm');
     if( tableSlider.style.display !== 'none'){
       document.getElementById('tableSlider').style.display='none';
       document.getElementById('heightForm').style.display='none';
+      changeText('Show Options');
     } else {
       document.getElementById('tableSlider').style.display='block';
       document.getElementById('heightForm').style.display='block';
+      changeText('Hide Options');
+    }
+  }
+  const showText = () => {
+    const show = 'Show Options';
+    const hide = 'Hide Options';
+    if( tableSlider.style.display !== 'none'){
+      document.getElementById('tableSlider').style.display='none';
+      document.getElementById('heightForm').style.display='none';
+      return show;
+    } else {
+      document.getElementById('tableSlider').style.display='block';
+      document.getElementById('heightForm').style.display='block';
+      return hide;
     }
   }
 
@@ -991,8 +1013,9 @@ function App() {
                   PDF(A4)
                 </button>
               </div>
-              <button className="button" onClick={onClicked} style={{
-                justifyContent: "center"}}>Hide Options</button>
+              <div style={{display:"flex", justifyContent: "center", margin:5}}>
+              <button className="button" onClick={onClicked}>{btnText}</button>
+              </div>
             </div>
           </div>
 

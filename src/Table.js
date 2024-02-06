@@ -184,12 +184,12 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
 
 
     const handleSubmit = (e) => {
-
         e.preventDefault();
+        const pituus = parseInt(name);
+        const uusiPituus = (pituus * 3.779527559); // Pixels to mm
+        setPituus(uusiPituus);
+        console.log(`Form submitted, ${uusiPituus}`);
 
-        console.log(`Form submitted, ${name}`);
-
-        setPituus(parseInt(name));
     }
 
     // const [pituus, newPituus] = useState(100);
@@ -232,8 +232,8 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
 
             <form  id="heightForm" onSubmit={handleSubmit}>
                 Change The Height of Table Rows
-                <input style={{padding:10, margin:10}} onChange = {(e) => setName(e.target.value)} value={name}></input>
-                <button style={{display:"flex"}} className="button" type='submit'>Click to submit</button>
+                <input placeholder="mm" style={{padding:10, margin:10}} onChange = {(e) => setName(e.target.value)} value={name}></input>
+                <button type='submit'>Click to submit</button>
             </form>
 
             <div id="tableSlider" className='sliderContainer'>
