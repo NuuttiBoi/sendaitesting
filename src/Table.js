@@ -178,7 +178,7 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
      */
 
     const handleChange = (e) => {
-        setCurrentValue(e);
+       setCurrentValue(e);
        setPituus(currentValue);
     }
 
@@ -190,6 +190,11 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
         setPituus(uusiPituus);
         console.log(`Form submitted, ${uusiPituus}`);
 
+    }
+
+    const hideColumn = () => {
+        console.log('piilotetaan kolumnit vitun neekeri');
+        document.getElementById('headers').style.display='none';
     }
 
     // const [pituus, newPituus] = useState(100);
@@ -209,7 +214,7 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
             <div {...getTableProps()} className={clsx("table", isTableResizing() && "noselect")}>
                 <div>
                     {headerGroups.map((headerGroup) => (
-                        <div {...headerGroup.getHeaderGroupProps()} className='tr'>
+                        <div {...headerGroup.getHeaderGroupProps()} className='tr' id='headers'>
                             {headerGroup.headers.map((column) => column.render("Header"))}
                         </div>
                     ))}
@@ -249,6 +254,8 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
                     max={1000}
                 >Change The Table Row Heights </ReactSlider>
             </div>
+
+            {/* <button onClick={hideColumn}>Hide Column</button> */}
 
         </>
     );
