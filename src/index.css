@@ -145,7 +145,27 @@ button {
 
 
 
+h1, h2, h3 {
+  color: var(--clr-heading);
+  font-family: 'Rubik', sans-serif;
+}
 
+
+
+input, textarea {
+  background-color: var(--clr-bg);
+  accent-color: var(--clr-primary);
+  color: var(--clr-text);
+}
+
+
+/* RaflaReviewer-otsikko */
+.title, .title:visited {
+  color: var(--clr-title);
+  font-size: 1.6rem;
+  text-decoration: none;
+  font-family: 'Rubik', sans-serif;
+}
 
 
 

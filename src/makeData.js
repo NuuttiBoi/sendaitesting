@@ -4,20 +4,19 @@ import {useEffect, useState} from "react";
 import axios from 'axios';
 
 const hearts = require('./symbols/hearts.png');
-const square = require('./symbols/square.png');
+const square = require('./newSymbols/square.png');
 const cross = require('./symbols/cross.png');
 const spiral = require('./symbols/spiral.png');
-const star = require('./symbols/star.png');
-const arrow = require('./symbols/arrow.png');
-const circle = require('./symbols/circle.png');
+const star = require('./newSymbols/star.png');
+const arrow = require('./newSymbols/arrow.png');
+const circle = require('./newSymbols/circle.png');
 const flower = require('./symbols/flower.png');
-const triangle = require('./symbols/triangle.png');
+const triangle = require('./newSymbols/triangle_re.png');
 const club = require('./symbols/club.png');
-const diamond = require('./symbols/diamond.png');
-const hash = require('./symbols/hash.png');
-
-
-
+const diamond = require('./newSymbols/diamond.png');
+const hash = require('./newSymbols/hash.png');
+const astarisk = require('./newSymbols/astarisk.png');
+const check = require('./newSymbols/check.png');
 
 
 
@@ -32,9 +31,9 @@ export default function MakeData(count) {
     kuvat = [
         kuvat[0] = circle,
         kuvat[1] = star,
-        kuvat[2] = club,
+        kuvat[2] = astarisk,
         kuvat[3] = square,
-        kuvat[4] = flower,
+        kuvat[4] = check,
         kuvat[5] = hearts,
         kuvat[6] = hash,
         kuvat[7] = arrow,

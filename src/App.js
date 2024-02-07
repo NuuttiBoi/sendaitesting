@@ -76,12 +76,15 @@ const cross = require('./symbols/cross.png');
 const spiral = require('./symbols/spiral.png');
 const star = require('./symbols/star.png');
 const arrow = require('./symbols/arrow.png');
-const circle = require('./symbols/circle.png');
+const circle = require('./newSymbols/circle.png');
 const flower = require('./symbols/flower.png');
-const triangle = require('./symbols/triangle.png');
+const triangle = require('./newSymbols/triangle_re.png');
 const club = require('./symbols/club.png');
 const diamond = require('./symbols/diamond.png');
 const hash = require('./symbols/hash.png');
+const astarisk = require('./newSymbols/astarisk.png');
+const check = require('./newSymbols/check.png');
+
 
 // const tableRef = useRef();
 
@@ -201,8 +204,8 @@ function reducer(state, action) {
               },
               {
                 value: 4,
-                image: flower,
-                label: flower,
+                image: check,
+                label: check,
               },
               {
                 value: 5,
@@ -211,8 +214,8 @@ function reducer(state, action) {
               },
               {
                 value: 6,
-                image: club,
-                label: club,
+                image: astarisk,
+                label: astarisk,
               },
               {
                 value: 7,
@@ -347,8 +350,8 @@ function reducer(state, action) {
               },
               {
                 value: 4,
-                image: flower,
-                label: flower,
+                image: check,
+                label: check,
               },
               {
                 value: 5,
@@ -357,8 +360,8 @@ function reducer(state, action) {
               },
               {
                 value: 6,
-                image: club,
-                label: club,
+                image: astarisk,
+                label: astarisk,
               },
               {
                 value: 7,
@@ -417,8 +420,8 @@ function reducer(state, action) {
               },
               {
                 value: 4,
-                image: flower,
-                label: flower,
+                image: check,
+                label: check,
               },
               {
                 value: 5,
@@ -427,8 +430,8 @@ function reducer(state, action) {
               },
               {
                 value: 6,
-                image: club,
-                label: club,
+                image: astarisk,
+                label: astarisk,
               },
               {
                 value: 7,
@@ -651,7 +654,7 @@ function App() {
     },
     {
       value: 4,
-      image: flower,
+      image: check,
     },
     {
       value: 5,
@@ -659,7 +662,7 @@ function App() {
     },
     {
       value: 6,
-      image: club,
+      image: astarisk,
     },
     {
       value: 7,
@@ -843,7 +846,7 @@ function App() {
               flexDirection: "column"
             }}
         >
-          <h1 >Create Your Own Work Table</h1>
+          <h1  className="title"> Create Your Own Work Table </h1>
 
         </div>
         <div className="container">

@@ -195,7 +195,7 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
     // const [pituus, newPituus] = useState(100);
     const [name, setName] = useState('');
 
-    const[pituus, setPituus] = useState(500) ;
+    const[pituus, setPituus] = useState(200) ;
 
     const[currentValue, setCurrentValue] = useState(200);
 
@@ -232,8 +232,8 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
 
             <form  id="heightForm" onSubmit={handleSubmit}>
                 Change The Height of Table Rows
-                <input placeholder="mm" style={{padding:10, margin:10}} onChange = {(e) => setName(e.target.value)} value={name}></input>
-                <button type='submit'>Click to submit</button>
+                <input placeholder="mm" style={{padding:10, margin:5}} onChange = {(e) => setName(e.target.value)} value={name}></input>
+                <button type='submit' >Click to submit</button>
             </form>
 
             <div id="tableSlider" className='sliderContainer'>
