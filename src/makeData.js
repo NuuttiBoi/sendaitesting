@@ -120,7 +120,7 @@ export default function MakeData(count) {
             label: "work1_name",
             accessor: "work1_name",
             minWidth: 100,
-            dataType: "select",
+            dataType: "text",
             options: options,
         },
         {
@@ -128,15 +128,15 @@ export default function MakeData(count) {
             label: "work2_name",
             accessor: "work2_name",
             minWidth: 100,
-            dataType: "select",
+            dataType: "text",
             options: options
         },
         {
             id: "age",
             label: "work3_name",
             accessor: "work3_name",
-            minWidth: 80,
-            dataType: "select",
+            minWidth: 100,
+            dataType: "text",
             options: options,
         }
         /*

@@ -12,7 +12,7 @@ export default function Relationship({value, backgroundColor}) {
                 textTransform: "capitalize",
                 display: "inline-block"
             }}>
-            {<img src={value} height={80} width={35} alt='kuva'/>}
+            {<img src={value} height={80} width={70} alt='kuva'/>}
     </span>
     );
 }

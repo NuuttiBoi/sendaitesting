@@ -160,6 +160,7 @@ export default function Cell({value: initialValue, row: {index}, column: {id, da
                                             onBlur={handleOptionBlur}
                                             ref={setAddSelectRef}
                                             onKeyDown={handleOptionKeyDown}
+                                            style={{fontSize:'500px'}}
                                         />
                                     </div>
                                 )}

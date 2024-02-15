@@ -526,6 +526,8 @@ function App() {
 
   const [tableData, setTableData] = React.useState([]);
 
+  const [lkm, setLkm] = useState('');
+
   /*
   const tabledata = [
     {
@@ -712,7 +714,8 @@ function App() {
 
   const IconSingleValue = (props) => (
       <SingleValue {...props}>
-        <img src={props.data.image} style={{ height: '151.18x', width: '151.18px', borderRadius: '20%', marginRight: '10px' }}/>
+        <img src={props.data.image} style={{ height: '185px', width: '185px',
+        justifyContent:'center', alignItems:'center'}}/>
         {props.data.label}
       </SingleValue>
   );
@@ -727,12 +730,13 @@ function App() {
   const colourStylesRow = {
     dropdownIndicator: styles => ({
       ...styles,
-      color: '#FFAE12',
+      color: 'white',
       height: 500,
     }),
     container:  base => ({
       ...base,
       flex:1,
+      color: 'white',
       height: 200,
       width: 300,
     })
@@ -753,6 +757,31 @@ function App() {
       width: 300,
     })
   }
+
+
+
+  const customStyles = {
+    option: provided => ({
+      ...provided,
+      color: 'white !important'
+    }),
+    control: provided => ({
+      ...provided,
+      color: 'black'
+    }),
+    singleValue: provided => ({
+      ...provided,
+      color: 'black'
+    }),
+    input: (styles) => ({
+      ...styles,
+      '[type="text"]': {
+        color: 'white !important'
+      }
+    })
+  }
+
+
 
   // const [state, dispatch] = data;
 
@@ -847,15 +876,31 @@ function App() {
     if( tableSlider.style.display !== 'none'){
       document.getElementById('tableSlider').style.display='none';
       document.getElementById('heightForm').style.display='none';
-      document.getElementById('headers').style.display='none'
+      document.getElementById('headers').style.display='none';
+      document.getElementById('rowForm').style.display='none';
+      // document.getElementById('fontForm').style.display='none';
       changeText('Show Options');
     } else {
       document.getElementById('tableSlider').style.display='block';
       document.getElementById('heightForm').style.display='block';
-      document.getElementById('headers').style.display='flex'
+      document.getElementById('rowForm').style.display='block';
+      // document.getElementById('fontForm').style.display='block';
+      document.getElementById('headers').style.display='flex';
       changeText('Hide Options');
     }
     // document.getElementById('headers').style.display='none';
+  }
+
+  const vaihdaFont = () => {
+    const nigga = document.getElementsByClassName('.data-input')[0];
+    nigga.fontSize=50;
+  }
+
+  const handleHeightSubmit = (e) => {
+    e.preventDefault();
+    if(lkm <= 2){
+      prompt('If you want to enter up to 2 rows, the optimal height would be around 78mm.');
+    }
   }
 
   return (
@@ -875,7 +920,7 @@ function App() {
               flexDirection: "column"
             }}
         >
-          <h1  className="title"> Create Your Own Work Table </h1>
+          <h1 className="title"> Create Your Own Work Table </h1>
 
         </div>
         <div className="container">
@@ -902,36 +947,50 @@ function App() {
             >
 
               <div id="targetContainer">
-                <div ref={targetRef} id="targetDiv" style={{minHeight: `${minHeight}`, minWidth: 100}}>
+                <div ref={targetRef} id="targetDiv" style={{minHeight: `${minHeight}`, minWidth: 60}}>
                   <div className='table-container'
                       //style={{minHeight: `${rangeSliderValue}%`}}
                        style={{minHeight: `${minHeight}`}}
                   >
-                    <div style={{verticalAlign: "top", left: 20, width:200, padding:20,
-                      fontSize:100, margin: 15}} id="firstSelect">
+                    <div style={{
+                      verticalAlign: "top", left: 0, right: 100, width: 210,
+                      fontSize: 100
+                    }} id="firstSelect">
                       <Select
                           components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
                           options={options}
                           menuPortalTarget={document.body}
-                          styles={{colourStylesRow}}
+                          placeholder={''}
+                          styles={{
+                            control: (provided, state) => ({
+                              ...provided,
+                              boxShadow: "none",
+                              color: "red",
+                              width: "100%",
+                            }),
+                            option: (provided, state) => ({
+                              ...provided,
+                              backgroundColor: state.isSelected ? '#00AEEC' : 'inherit',
+                            })
+                          }}
                           autoSize={true}
                       />
                     </div>
-                    <Table id="reactTable"
-                           ref={tableRef}
-                           columns={state.columns}
-                           rows={state.rows}
-                           style={{height: '100%'}}
-                           minHeight={minHeight}
-                           height={minHeight}
-                           manualRowResize={true}
-                           autoRowResize={true}
-                           data={tableData}
-                           dispatch={dispatch}
-                           skipReset={state.skipReset}
-                           pageSize={100}
-                           rotate={90}
-                           updateMyData={updateMyData}/>
+                    <div style={{marginLeft: 100, marginRight: 100, width: 1300}}>
+                      <Table id="reactTable"
+                             ref={tableRef}
+                             columns={state.columns}
+                             rows={state.rows}
+                             minHeight={minHeight}
+                             manualRowResize={true}
+                             autoRowResize={true}
+                             data={tableData}
+                             dispatch={dispatch}
+                             skipReset={state.skipReset}
+                             pageSize={100}
+                             rotate={90}
+                             updateMyData={updateMyData}/>
+                    </div>
                     <div style={{verticalAlign: "bottom", position: 'fixed', right: 280, width: 100}} id="secondSelect">
                     </div>
                   </div>
@@ -940,84 +999,93 @@ function App() {
                     float: "right",
                     verticalAlign: "bottom",
                     right: 20,
-                    width: 200,
+                    width: 210,
                     fontSize: 20,
                     height: minHeight
                   }}>
-                    <div style={{verticalAlign: "bottom", width: 200, position: 'relative',
-                    fontSize:100, margin:15}} id="secondSelect">
+                    <div style={{
+                      verticalAlign: "bottom", width: 210, position: 'relative',
+                      fontSize: 100, right: 60
+                    }} id="secondSelect">
                       <Select
                           components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
                           options={options}
                           styles={{styles}}
                           autoSize={false}
                           menuPortalTarget={document.body}
+                          placeholder={''}
                           formatOptionLabel={<div className="country-option">
-                            <img src={options.image} style={{height:300}} alt="country-image"/>
+                            <img src={options.image} style={{height: 300}} alt="country-image"/>
                             <span>{options.label}</span>
                           </div>}
                       />
                     </div>
                   </div>
 
-                  <div id="tableId" style={{display: "flex", margin:15, height:300}}>
-                    <div style={{width:200, fontSize:100}}>
-                    <Select
-                        components={
-                          {SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
-                        options={options}
-                        styles={{colourStylesRow}}
-                        autoSize={true}
-                        menuPortalTarget={document.body}
-                    />
+                  <div id="tableId" style={{display: "flex", margin: 15, height: 300}}>
+                    ID:
+                    <div style={{width: 210, fontSize: 100, margin: 10}}>
+                      <Select
+                          components={
+                            {SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
+                          options={options}
+                          styles={{colourStylesRow}}
+                          autoSize={true}
+                          menuPortalTarget={document.body}
+                          placeholder={''}
+                      />
                     </div>
-                    <div style={{width:200, fontSize:100}}>
-                    <Select
-                        components={{
-                          SingleValue: IconSingleValue, Option: IconOption,
-                          DropdownIndicator: () => null
-                        }}
-                        options={options}
-                        styles={{colourStylesRow}}
-                        autoSize={false}
-                        menuPortalTarget={document.body}
-                    />
+                    <div style={{width: 210, fontSize: 100, margin: 10, alignItems: 'center'}}>
+                      <Select
+                          components={{
+                            SingleValue: IconSingleValue, Option: IconOption,
+                            DropdownIndicator: () => null
+                          }}
+                          options={options}
+                          styles={{colourStylesRow}}
+                          autoSize={false}
+                          menuPortalTarget={document.body}
+                          placeholder={''}
+                      />
                     </div>
-                    <div style={{width:200, fontSize:100}}>
-                    <Select
-                        components={{
-                          SingleValue: IconSingleValue, Option: IconOption,
-                          DropdownIndicator: () => null
-                        }}
-                        options={options}
-                        styles={{colourStylesRow}}
-                        autoSize={true}
-                        menuPortalTarget={document.body}
-                    />
+                    <div style={{width: 210, fontSize: 100, margin: 10}}>
+                      <Select
+                          components={{
+                            SingleValue: IconSingleValue, Option: IconOption,
+                            DropdownIndicator: () => null
+                          }}
+                          options={options}
+                          styles={{colourStylesRow}}
+                          autoSize={true}
+                          menuPortalTarget={document.body}
+                          placeholder={''}
+                      />
                     </div>
-                    <div style={{width:200, fontSize:100}}>
-                    <Select
-                        components={{
-                          SingleValue: IconSingleValue, Option: IconOption,
-                          DropdownIndicator: () => null
-                        }}
-                        options={options}
-                        styles={{colourStylesRow}}
-                        autoSize={true}
-                        menuPortalTarget={document.body}
-                    />
+                    <div style={{width: 210, fontSize: 100, margin: 10}}>
+                      <Select
+                          components={{
+                            SingleValue: IconSingleValue, Option: IconOption,
+                            DropdownIndicator: () => null
+                          }}
+                          options={options}
+                          styles={{colourStylesRow}}
+                          autoSize={true}
+                          menuPortalTarget={document.body}
+                          placeholder={''}
+                      />
                     </div>
-                    <div style={{width:200, fontSize:100}}>
-                    <Select
-                        components={{
-                          SingleValue: IconSingleValue, Option: IconOption,
-                          DropdownIndicator: () => null
-                        }}
-                        options={options}
-                        styles={{colourStylesRow}}
-                        autoSize={true}
-                        menuPortalTarget={document.body}
-                    />
+                    <div style={{width: 210, fontSize: 100, margin: 10}}>
+                      <Select
+                          components={{
+                            SingleValue: IconSingleValue, Option: IconOption,
+                            DropdownIndicator: () => null
+                          }}
+                          options={options}
+                          styles={{colourStylesRow}}
+                          autoSize={true}
+                          menuPortalTarget={document.body}
+                          placeholder={''}
+                      />
                     </div>
                   </div>
                 </div>
@@ -1039,8 +1107,8 @@ function App() {
                   PDF(A4)
                 </button>
               </div>
-              <div style={{display:"flex", justifyContent: "center", margin:5}}>
-              <button className="button" onClick={onClicked}>{btnText}</button>
+              <div style={{display: "flex", justifyContent: "center", margin: 5}}>
+                <button className="button" onClick={onClicked}>{btnText}</button>
               </div>
             </div>
           </div>
@@ -1078,13 +1146,24 @@ function App() {
                 min="300"
                 max="600"
                 value={rangeSliderValue}
-                onChange={(value) =>handleRangeSliderChange(value)}
+                onChange={(value) => handleRangeSliderChange(value)}
                 className="slider"
             />
           </Slider>
         </div>
 
         <button className="button" onClick={rotate90}>Rotate</button>
+
+        <button className="button" onClick={vaihdaFont}>Rotate</button>
+
+        <div>Tietoja mahdollisista korkeuksista
+          <form onSubmit={handleHeightSubmit} id={"rowForm"}>Kuinka monta riviä haluat taulukkoon?
+            <input placeholder="lkm" style={{padding: 10, margin: 5}} onChange={(e) => setLkm(e.target.value)}
+                   value={lkm}></input>
+            <button type='submit'>Click to submit</button>
+          </form>
+        </div>
+
 
         {/*
         <button className="button" onClick={onClicked}></button>

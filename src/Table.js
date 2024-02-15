@@ -192,6 +192,14 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
 
     }
 
+    const handleFontSubmit = (e) => {
+        e.preventDefault();
+        const size = parseInt(name);
+        const uusiSize = (size * 3.779527559); // Pixels to mm
+        setSize(uusiSize);
+        console.log(`Form submitted, ${uusiSize}`);
+    }
+
     const hideColumn = () => {
         console.log('piilotetaan kolumnit vitun neekeri');
         document.getElementById('headers').style.display='none';
@@ -200,12 +208,31 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
     // const [pituus, newPituus] = useState(100);
     const [name, setName] = useState('');
 
-    const[pituus, setPituus] = useState(200) ;
+    const[pituus, setPituus] = useState(294) ;
+    const[size, setSize] = useState(20) ;
 
-    const[currentValue, setCurrentValue] = useState(200);
+    const [lkm, setLkm] = useState('');
+
+
+
+    const[currentValue, setCurrentValue] = useState(147);
 
     function smallerRows() {
         setPituus(100);
+    }
+
+    const apprHeight = useState('');
+
+    const handleHeightSubmit = (e) => {
+        e.preventDefault();
+        /*
+        if(lkm <= 2){
+            prompt('haista vittu');
+            setPituus(294);
+        }
+
+         */
+        setPituus(588/lkm);
     }
 
 
@@ -225,7 +252,7 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
                         return (
                             <div {...row.getRowProps()} className='tr'>
                                 {row.cells.map((cell) => (
-                                    <div {...cell.getCellProps({style: {height: pituus}})} className='td'>
+                                    <div {...cell.getCellProps({style: {height: pituus},})} className='td'>
                                         {cell.render("Cell")}
                                     </div>
                                 ))}
@@ -235,11 +262,22 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
                 </div>
             </div>
 
-            <form  id="heightForm" onSubmit={handleSubmit}>
+            <form id="heightForm" onSubmit={handleSubmit}>
                 Change The Height of Table Rows
-                <input placeholder="mm" style={{padding:10, margin:5}} onChange = {(e) => setName(e.target.value)} value={name}></input>
-                <button type='submit' >Click to submit</button>
+                <input placeholder="mm" style={{padding: 10, margin: 5}} onChange={(e) => setName(e.target.value)}
+                       value={name}></input>
+                <button type='submit'>Click to submit</button>
             </form>
+
+            {/* Doesn't work
+
+            <form id="fontForm" onSubmit={handleFontSubmit}>
+                Change The Font Size
+                <input placeholder="mm" style={{padding: 10, margin: 5}} onChange={(e) => setName(e.target.value)}
+                       value={name}></input>
+                <button type='submit'>Click to submit</button>
+            </form>
+            */}
 
             <div id="tableSlider" className='sliderContainer'>
                 <ReactSlider
@@ -256,6 +294,15 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
             </div>
 
             {/* <button onClick={hideColumn}>Hide Column</button> */}
+
+            <div>Tietoja mahdollisista korkeuksista
+                <form onSubmit={handleHeightSubmit} id={"rowForm"}>Kuinka monta riviä haluat taulukkoon?
+                    <input placeholder="lkm" style={{padding: 10, margin: 5}} onChange={(e) => setLkm(e.target.value)}
+                           value={lkm}></input>
+                    <button type='submit'>Click to submit</button>
+                </form>
+            </div>
+
 
         </>
     );
