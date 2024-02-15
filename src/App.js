@@ -878,12 +878,14 @@ function App() {
       document.getElementById('heightForm').style.display='none';
       document.getElementById('headers').style.display='none';
       document.getElementById('rowForm').style.display='none';
+      document.getElementById('autoBtn').style.display='none';
       // document.getElementById('fontForm').style.display='none';
       changeText('Show Options');
     } else {
       document.getElementById('tableSlider').style.display='block';
       document.getElementById('heightForm').style.display='block';
       document.getElementById('rowForm').style.display='block';
+      document.getElementById('autoBtn').style.display='block';
       // document.getElementById('fontForm').style.display='block';
       document.getElementById('headers').style.display='flex';
       changeText('Hide Options');
@@ -1139,6 +1141,7 @@ function App() {
           animated icons created by Freepik - Flaticon</a>
         </footer>
 
+        {/*
         <div className='sliderContainer'>
           <Slider>
             <input
@@ -1152,6 +1155,7 @@ function App() {
           </Slider>
         </div>
 
+
         <button className="button" onClick={rotate90}>Rotate</button>
 
         <button className="button" onClick={vaihdaFont}>Rotate</button>
@@ -1163,6 +1167,8 @@ function App() {
             <button type='submit'>Click to submit</button>
           </form>
         </div>
+
+        */}
 
 
         {/*

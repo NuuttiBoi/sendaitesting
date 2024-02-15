@@ -223,16 +223,17 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
 
     const apprHeight = useState('');
 
+    /*
     const handleHeightSubmit = (e) => {
         e.preventDefault();
-        /*
-        if(lkm <= 2){
-            prompt('haista vittu');
-            setPituus(294);
-        }
-
-         */
         setPituus(588/lkm);
+        console.log(rows.length);
+    }
+    */
+
+    const handleAutoRowHeight = (e) => {
+        e.preventDefault();
+        setPituus(588/rows.length);
     }
 
 
@@ -279,7 +280,18 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
             </form>
             */}
 
-            <div id="tableSlider" className='sliderContainer'>
+            <form onSubmit={handleHeightSubmit} id={"rowForm"}>
+                Tell the number of rows you want in the table, so the program can determine
+                an appropriate height for the rows.
+                <input placeholder="lkm" style={{padding: 10, margin: 5}} onChange={(e) => setLkm(e.target.value)}
+                       value={lkm}></input>
+                <button type='submit'>Click to submit</button>
+            </form>
+
+            <button className={'button'}  id={'autoBtn'} onClick={handleAutoRowHeight}>Auto Row Heights</button>
+
+            <div id="tableSlider" className='sliderContainer' style={{padding:20, justifyContent:"center"}}>
+                Change the row height
                 <ReactSlider
                     defaultValue={0}
                     value={currentValue}
@@ -294,14 +306,6 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
             </div>
 
             {/* <button onClick={hideColumn}>Hide Column</button> */}
-
-            <div>Tietoja mahdollisista korkeuksista
-                <form onSubmit={handleHeightSubmit} id={"rowForm"}>Kuinka monta riviä haluat taulukkoon?
-                    <input placeholder="lkm" style={{padding: 10, margin: 5}} onChange={(e) => setLkm(e.target.value)}
-                           value={lkm}></input>
-                    <button type='submit'>Click to submit</button>
-                </form>
-            </div>
 
 
         </>
