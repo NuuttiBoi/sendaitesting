@@ -621,6 +621,13 @@ function App() {
     //const newList = tableData.filter( li => li.id !== id);
     console.log(tableData);
     setTableData(newVals);
+
+
+    document.querySelectorAll('*').forEach(el => {
+      if (el.offsetWidth > document.documentElement.offsetWidth) {
+        console.log('Found the worst element ever: ', el);
+      }
+    });
   }
   const updateMyData = (rowIndex, columnId, value) => {
     // We also turn on the flag to not reset the page
@@ -943,7 +950,7 @@ function App() {
 
 
           </div>
-          <div style={{overflow: "auto", display: "flex"}}>
+          <div style={{overflow: "hidden", display: "flex"}}>
             <div
                 style={{
                   flex: "1 1 auto",
@@ -983,7 +990,7 @@ function App() {
                           autoSize={true}
                       />
                     </div>
-                    <div style={{marginLeft: 100, marginRight: 100, width: 1300}}>
+                    <div style={{marginLeft: 100, marginRight: 100, width: 1300, maxWidth:1500}}>
                       <Table id="reactTable"
                              ref={tableRef}
                              columns={state.columns}
@@ -1012,19 +1019,15 @@ function App() {
                   }}>
                     <div style={{
                       verticalAlign: "bottom", width: 210, position: 'relative',
-                      fontSize: 100, right: 60
+                      fontSize: 100, right: 20
                     }} id="secondSelect">
                       <Select
                           components={{SingleValue: IconSingleValue, Option: IconOption, DropdownIndicator: () => null}}
                           options={options}
-                          styles={{styles}}
-                          autoSize={false}
+                          styles={{colourStylesRow}}
+                          autoSize={true}
                           menuPortalTarget={document.body}
                           placeholder={''}
-                          formatOptionLabel={<div className="country-option">
-                            <img src={options.image} style={{height: 300}} alt="country-image"/>
-                            <span>{options.label}</span>
-                          </div>}
                       />
                     </div>
                   </div>
@@ -1103,16 +1106,19 @@ function App() {
                 alignItems: "center"
               }}>
                 <button id="pdfButton" className="button" onClick={() => generatePDF(targetRef, Options)}>
-                  PDF(A5)
+                  PDF
                 </button>
                 <div id="content-id">
                 </div>
+                {/*
                 <button className="button" onClick={() => toPDF()} style={{
                   justifyContent: "center",
                   alignItems: "center"
                 }}>
                   PDF(A4)
                 </button>
+                */}
+
               </div>
               <div style={{display: "flex", justifyContent: "center", margin: 5}}>
                 <button className="button" onClick={onClicked}>{btnText}</button>

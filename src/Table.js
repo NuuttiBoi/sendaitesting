@@ -237,23 +237,21 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
 
 
 
-
-
     return (
         <>
-            <div style={{display:'flex', justifyContent:'center', marginBottom:100, marginTop:0}}>
-            <button id={'columnBtn'} className={'button'} style={{right: 4, position:'sticky'}}
-                    onClick={(e) =>
-                        dataDispatch({type: "add_column_to_left", columnId: 99999, focus: true})}>
-                Add Column
-            </button>
+            <div style={{display: 'flex', justifyContent: 'right', marginTop: 0}}>
+                <button id={'columnBtn'} className={'button'} style={{right: 4, position: 'sticky'}}
+                        onClick={(e) =>
+                            dataDispatch({type: "add_column_to_left", columnId: 99999, focus: true})}>
+                    +
+                </button>
             </div>
 
             <div {...getTableProps()} className={clsx("table", isTableResizing() && "noselect")}>
                 <div>
                     {headerGroups.map((headerGroup) => (
                         <div {...headerGroup.getHeaderGroupProps()} className='tr' id='headers'>
-                            {headerGroup.headers.map((column) => column.render("Header"))}
+                        {headerGroup.headers.map((column) => column.render("Header"))}
                         </div>
                     ))}
                 </div>
