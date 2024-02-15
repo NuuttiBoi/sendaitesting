@@ -278,7 +278,7 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
                        value={name}></input>
                 <button type='submit'>Click to submit</button>
             </form>
-            */}
+
 
             <form onSubmit={handleHeightSubmit} id={"rowForm"}>
                 Tell the number of rows you want in the table, so the program can determine
@@ -287,7 +287,7 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
                        value={lkm}></input>
                 <button type='submit'>Click to submit</button>
             </form>
-
+             */}
             <button className={'button'}  id={'autoBtn'} onClick={handleAutoRowHeight}>Auto Row Heights</button>
 
             <div id="tableSlider" className='sliderContainer' style={{padding:20, justifyContent:"center"}}>
