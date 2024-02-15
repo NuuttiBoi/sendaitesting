@@ -10,6 +10,7 @@ import Slider from "./Slider";
 import slider from "./Slider";
 import ReactSlider from "react-slider";
 import TableSlider from "./TableSlider";
+import {usePopper} from "react-popper";
 
 const defaultColumn = {
     minWidth: 50,
@@ -17,6 +18,7 @@ const defaultColumn = {
     maxWidth: 400,
     Cell: Cell,
     Header: Header,
+    className: 'column',
     sortType: "alphanumericFalsyLast"
 };
 
@@ -200,10 +202,7 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
         console.log(`Form submitted, ${uusiSize}`);
     }
 
-    const hideColumn = () => {
-        console.log('piilotetaan kolumnit vitun neekeri');
-        document.getElementById('headers').style.display='none';
-    }
+
 
     // const [pituus, newPituus] = useState(100);
     const [name, setName] = useState('');
@@ -237,8 +236,19 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
     }
 
 
+
+
+
     return (
         <>
+            <div style={{display:'flex', justifyContent:'center', marginBottom:100, marginTop:0}}>
+            <button id={'columnBtn'} className={'button'} style={{right: 4, position:'sticky'}}
+                    onClick={(e) =>
+                        dataDispatch({type: "add_column_to_left", columnId: 99999, focus: true})}>
+                Add Column
+            </button>
+            </div>
+
             <div {...getTableProps()} className={clsx("table", isTableResizing() && "noselect")}>
                 <div>
                     {headerGroups.map((headerGroup) => (
@@ -288,9 +298,9 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
                 <button type='submit'>Click to submit</button>
             </form>
              */}
-            <button className={'button'}  id={'autoBtn'} onClick={handleAutoRowHeight}>Auto Row Heights</button>
+            <button className={'button'} id={'autoBtn'} onClick={handleAutoRowHeight}>Auto Row Heights</button>
 
-            <div id="tableSlider" className='sliderContainer' style={{padding:20, justifyContent:"center"}}>
+            <div id="tableSlider" className='sliderContainer' style={{padding: 20, justifyContent: "center"}}>
                 Change the row height
                 <ReactSlider
                     defaultValue={0}
@@ -304,6 +314,7 @@ export default function Table({columns, data, dispatch: dataDispatch, skipReset}
                     max={1000}
                 >Change The Table Row Heights </ReactSlider>
             </div>
+
 
             {/* <button onClick={hideColumn}>Hide Column</button> */}
 

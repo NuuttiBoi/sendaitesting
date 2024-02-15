@@ -16,7 +16,8 @@ export default function Header({
                                    column: {id, created, label, dataType, getResizerProps, getHeaderProps},
                                    setSortBy,
                                    dataDispatch
-                               }) {
+                               })
+{
     const [expanded, setExpanded] = useState(created || false);
     const [referenceElement, setReferenceElement] = useState(null);
     const [popperElement, setPopperElement] = useState(null);
@@ -29,6 +30,14 @@ export default function Header({
     const [typeReferenceElement, setTypeReferenceElement] = useState(null);
     const [typePopperElement, setTypePopperElement] = useState(null);
     const [showType, setShowType] = useState(false);
+    const [columnNmbr, setColumnNmbr] = useState(3);
+
+    const NewCount = () => {
+        this.setState((prevState, props) => ({
+            counter: prevState.counter + 1
+        }));
+    }
+
     const buttons = [
         {
             onClick: (e) => {
@@ -52,6 +61,10 @@ export default function Header({
             onClick: (e) => {
                 dataDispatch({type: "update_column_header", columnId: id, label: header});
                 dataDispatch({type: "add_column_to_left", columnId: id, focus: false});
+
+                setColumnNmbr(columnNmbr+1);
+                console.log('kolumnit:' + columnNmbr);
+
                 setExpanded(false);
             },
             icon: <ArrowLeftIcon />,
@@ -61,6 +74,10 @@ export default function Header({
             onClick: (e) => {
                 dataDispatch({type: "update_column_header", columnId: id, label: header});
                 dataDispatch({type: "add_column_to_right", columnId: id, focus: false});
+
+                setColumnNmbr(columnNmbr+1);
+                console.log('kolumnit:' + columnNmbr);
+
                 setExpanded(false);
             },
             icon: <ArrowRightIcon />,
@@ -71,6 +88,9 @@ export default function Header({
                 dataDispatch({type: "update_column_header", columnId: id, label: header});
                 dataDispatch({type: "delete_column", columnId: id});
                 setExpanded(false);
+
+                setColumnNmbr(columnNmbr-1);
+                console.log('kolumnit:' + columnNmbr);
             },
             icon: <TrashIcon />,
             label: "Delete"
@@ -80,7 +100,7 @@ export default function Header({
     const types = [
         {
             onClick: (e) => {
-                dataDispatch({type: "update_column_type", columnId: id, dataType: "select", options:'homo'});
+                dataDispatch({type: "update_column_type", columnId: id, dataType: "select"});
                 setShowType(false);
                 setExpanded(false);
             },
@@ -236,12 +256,20 @@ export default function Header({
         <div {...getHeaderProps({style: {display: "inline-block"}})} className='th noselect'>
             <div
                 className='th-content'
+                id='plussa'
                 style={{display: "flex", justifyContent: "center"}}
-                onClick={(e) => dataDispatch({type: "add_column_to_left", columnId: 999999, focus: true})}>
+                onClick={(e) => dataDispatch({type: "add_column_to_left", columnId:id, focus: true})}>
         <span className='svg-icon-sm svg-gray'>
-          <PlusIcon />
+          <PlusIcon/>
         </span>
+                <button onClick={(e) => {
+                    dataDispatch({type: "update_column_header", columnId: id, label: header});
+                    dataDispatch({type: "add_column_to_left", columnId: id,  focus: false});
+                }}>
+                    haista vittu
+                </button>
             </div>
         </div>
+
     );
 }

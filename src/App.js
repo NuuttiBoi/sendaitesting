@@ -327,7 +327,7 @@ function reducer(state, action) {
             id: leftId,
             label: "Column",
             accessor: leftId,
-            dataType: "select",
+            dataType: "text",
             created: action.focus && true,
             options: [{
               value: 0,
@@ -397,7 +397,7 @@ function reducer(state, action) {
             id: rightId,
             label: "Column",
             accessor: rightId,
-            dataType: "select",
+            dataType: "text",
             created: action.focus && true,
             options: [{
               value: 0,
@@ -877,25 +877,28 @@ function App() {
       document.getElementById('tableSlider').style.display='none';
       document.getElementById('heightForm').style.display='none';
       document.getElementById('headers').style.display='none';
-      document.getElementById('rowForm').style.display='none';
+      document.getElementById('columnBtn').style.display='none';
+      //document.getElementById('rowForm').style.display='none';
       document.getElementById('autoBtn').style.display='none';
       // document.getElementById('fontForm').style.display='none';
       changeText('Show Options');
     } else {
       document.getElementById('tableSlider').style.display='block';
       document.getElementById('heightForm').style.display='block';
-      document.getElementById('rowForm').style.display='block';
+      //document.getElementById('rowForm').style.display='block';
       document.getElementById('autoBtn').style.display='block';
+      document.getElementById('columnBtn').style.display='flex';
       // document.getElementById('fontForm').style.display='block';
       document.getElementById('headers').style.display='flex';
+
       changeText('Hide Options');
     }
     // document.getElementById('headers').style.display='none';
   }
 
   const vaihdaFont = () => {
-    const nigga = document.getElementsByClassName('.data-input')[0];
-    nigga.fontSize=50;
+    const n = document.getElementsByClassName('.data-input')[0];
+    n.fontSize=50;
   }
 
   const handleHeightSubmit = (e) => {
@@ -937,6 +940,8 @@ function App() {
           }}>
             <button onClick={handleAdd} className="button">Add New Row</button>
             <button onClick={handleRemove} className="delButton">Remove Row</button>
+
+
           </div>
           <div style={{overflow: "auto", display: "flex"}}>
             <div
@@ -1136,7 +1141,7 @@ function App() {
         </div>
 
 
-        <footer style={{alignItems: "center", fontSize: 10, marginLeft: 5, marginBottom: 0}}>
+        <footer style={{alignItems: "center", fontSize: 10, marginLeft: 5, marginBottom: 10}}>
           Icon by: <a href="https://www.flaticon.com/free-animated-icons/calendar" title="calendar animated icons">Calendar
           animated icons created by Freepik - Flaticon</a>
         </footer>

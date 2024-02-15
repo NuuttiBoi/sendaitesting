@@ -138,17 +138,22 @@ export default function MakeData(count) {
             minWidth: 100,
             dataType: "text",
             options: options,
-        }
+        },
+
         /*
         {
             id: 999999,
-            width: 20,
+            width: 2,
             label: "+",
             disableResizing: true,
             dataType: "null"
         }
 
          */
+
+
+
+
     ];
     let rows = [
         {
