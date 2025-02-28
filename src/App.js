@@ -84,9 +84,6 @@ const diamond = require('./symbols/diamond.png');
 const hash = require('./symbols/hash.png');
 const astarisk = require('./newSymbols/astarisk.png');
 const check = require('./newSymbols/check.png');
-
-const dice = require('./symbols/dice3.png');
-
 // const tableRef = useRef();
 
 function reducer(state, action) {
@@ -684,8 +681,8 @@ function App() {
     },
     {
       value: 9,
-      label: dice,
-      image: dice,
+      label: spiral,
+      image: spiral,
     },
     {
       value: 10,
